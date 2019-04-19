@@ -2,18 +2,170 @@
 
 `r if(!knitr:::is_latex_output()) '# (APPENDIX) Appendix {-}'` 
 
-# The First Appendix
+# Derivation of full conditional distributions {#appendix-A}
 
-This first appendix includes all of the R chunks of code that were hidden throughout the document (using the `include = FALSE` chunk tag) to help with readibility and/or setup.
+It is straightforward to show that 
+$$
+\pi(\bb \mid \lam, \by, \bz, \bX) \propto 
+\prod_{i=1}^k\prod_{\ell=1}^{p_s + p_\ell} \boldbeta_{i\ell}^{\sum_{j=1}^{n_i} z_{ij\ell} + a -1} (1-  \bb_{i\ell})^{n_i -\sum_{j=1} \bz_{ij\ell} + b -1}, 
+$$ 
+which means
+$$
+\bb_{i\ell} \mid \boldLambda, \by, \bz, \bX  \stackrel{iid}{\sim} \text{Beta}(\sum_{j=1}^{n_i} z_{ij\ell} + a, n_i - \sum_{j=1}^{n_i} z_{ij\ell} + b).
+$$
 
-**In the main Rmd file**
+Consider the distribution of $\bz \mid \lam, \by, \bb, \bX.$ We find that 
+\begin{itemize}
+\item If $\bX_{ij\ell} \neq Y_{\lambda_{ij}\ell},$ then $\bz_{ij\ell} = 1.$
+\item  If $\bX_{ij\ell} = Y_{\lambda_{ij}\ell},$ then
+\begin{itemize}
+\item if $\ell \leq p_s$ (meaning that we have a string field), then
+$$
+\bz_{ij\ell} = 
+\begin{cases}
+1 \; \text{w.p. proportional to} \; 
+\bb_{i\ell} \; \alpha_\ell(\bX_{ij\ell}) \;  h_\ell(Y_{\lambda_{ij}\ell}) \;  \exp\{ - c d(\bX_{ij\ell},Y_{\lambda_{ij}\ell}) \} \\
+0 \; \text{w.p. proportional to} \; 1- \bb_{i\ell} 
+\end{cases}
+$$
 
-```{r ref.label='include_packages', results='hide', echo = TRUE}
-```
 
-**In Chapter \@ref(ref-labels):**
+This implies that 
+\begin{align*}
+\bz \mid \lam, \by, \bb, \bX \sim \text{Bernoulli}\left(
+\frac{\bb_{i\ell} \; \alpha_\ell(\bX_{ij\ell} )\;  h_\ell(Y_{\lambda_{ij}\ell}) \;  \exp\{ - c d(\bX_{ij\ell},Y_{\lambda_{ij}\ell}) \} }
+{\bb_{i\ell} \; \alpha_\ell(\bX_{ij\ell}) \;  h_\ell(Y_{\lambda_{ij}\ell}) \;  \exp\{ - c d(\bX_{ij\ell},Y_{\lambda_{ij}\ell}) \} + (1- \bb_{i\ell})}
+\right).
+\end{align*}
+\item If $\ell > p_s$ (meaning that $\ell$ is not a string field), then there is no $h_\ell$ term and hence
+\begin{align*}
+\bz \mid \lam, \by, \bb, \bX \sim \text{Bernoulli}\left(
+\frac{\bb_{i\ell} \; \alpha_\ell(\bX_{ij\ell}) \} }
+{\bb_{i\ell} \; \alpha_\ell(\bX_{ij\ell})  + (1- \bb_{i\ell})}
+\right).
+\end{align*}
 
-```{r ref.label='include_packages_2', results='hide', echo = TRUE}
-```
+\end{itemize}
+\end{itemize}
+Remark: $\bz_{ij\ell}$ are all independent conditional on $\lam, \by, \bb, \bX.$
+
+We now turn to the conditional distribution of $\by \mid \lam, \by, \bb, \bX.$ First, note that each $\by_{j\prime \ell}$ takes values in the set $S_\ell,$ which consists of all values for the $\ell$th field that appear anywhere in the data. Then the distribution of 
+$\by_{j\prime \ell} \mid \lam, \by, \bb, \bX$ takes the form 
+$P(\by_{j\prime \ell} = w \mid \lam, \by, \bb, \bX) = A_\phi \phi_w$ for all $w \in S_\ell,$ where $A_\phi = \left (\sum_{w \in S_\ell} \phi_w \right) ^{-1}.$\footnote{Both $\phi_w$ and $A_\phi$ depend on both $j\prime$ and $\ell,$ however, for convenience we leave this off.}  
+
+Let $R_j^\prime = \{(i,j) : \lambda_{ij} = j^\prime \}$ 
+%denote 
+be the set of all records that correspond to individual $ j^\prime.$ Then if $\ell \leq p_s,$
+
+\begin{align*}
+\phi_w = \mathop{ \prod_{(i,j) \in R_j^\prime} }_{z_{ij\ell}=1} h_\ell(w) \exp\left\{
+-c 
+\mathop{\sum_{(i,j) \in R_j^\prime}}_{z_{ij\ell}=1}
+d(X_{ij\ell},w)
+\right\}
+\alpha_\ell(w) \times
+\mathop{ \prod_{(i,j) \in R_j^\prime} }_{z_{ij\ell}=0} I(X_{ij\ell} = w).
+\end{align*}
+
+Simplifying, 
+
+$$
+\phi_w = 
+\begin{cases}
+\displaystyle
+\alpha_\ell(w)  \mathop{ \prod_{(i,j) \in R_j^\prime} }_{z_{ij\ell}=1} 
+\left\{
+ h_\ell(w)
+\;  \exp\left\{
+-c \;
+d(X_{ij\ell},w)
+\right\} 
+\right\}
+\text{if} \; X_{ij\ell} = w \;  \forall (i,j) \in R_j^\prime  \owns  z_{ij\ell} = 0\\
+0 \; \text{otherwise.}
+\end{cases}
+$$
+
+Hence, if $\ell \leq p_s,$ then $Y_{j^\prime \ell} \mid \lam, \bz, \bb, \bX$ has the distribution
+\begin{align*}
+P(Y_{j^\prime \ell} = w \mid \lam, \bz, \bb, \bX) = \frac{
+\alpha_\ell(w)  \mathop{ \prod_{(i,j) \in R_j^\prime} }_{z_{ij\ell}=1} 
+\left\{
+ h_\ell(w)
+\;  \exp\left\{
+-c \;
+d(X_{ij\ell},w)
+\right\} 
+\right\}
+}
+{
+\sum_{w \in S_\ell} \left(
+\alpha_\ell(w)  \mathop{ \prod_{(i,j) \in R_j^\prime} }_{z_{ij\ell}=1} 
+\left\{
+ h_\ell(w)
+\;  \exp\left\{
+-c \;
+d(X_{ij\ell},w)
+\right\} 
+\right\}
+\right)
+}.
+\end{align*}
+
+If instead, $\ell > p_c,$ then we find that 
+%
+$
+P(Y_{j^\prime \ell} = w \mid \lam, \bz, \bb, \bX) =\alpha_\ell(w)
+\left(\sum_{w \in S_\ell} \alpha_\ell(w)\right)^{-1}.
+$
+
+Regarding, the linkage structure $\lam,$ its full conditional is as follows: 
+%
+$
+P(\lambda_{ij} = v \mid \by, \bz, \bb, \bX) = 0 
+$ if there exists $\ell$ such that $z_{ij\ell} = 0$ and $X_{ij\ell} \neq Y_{v\ell}.$ Otherwise, 
+%
+$$ P(\lambda_{ij} = v \mid \by, \bz, \bb, \bX) \propto 
+ \mathop{ \prod_{\ell=1}^{p_s}}_{z_{ij\ell }= 1}
+ \left\{
+ h_\ell(Y_{v \ell} )
+ \exp\left\{
+-c \;
+d(X_{ij\ell},Y_{v \ell} )
+\right\} 
+ \right\}.
+ $$
+ 
+Define $\Omega_{ij} = \{j^\prime : X_{ij\ell} =  Y_{j^\prime \ell} \; \forall \; \ell \owns z_{ij\ell} = 0\}.$ Then this implies 
+%
+\begin{align*}
+P(\lambda_{ij} = v \mid \by, \bz, \bb, \bX) =
+\frac{
+\displaystyle
+ \mathop{ \prod_{\ell=1}^{p_s}}_{z_{ij\ell }= 1}
+ \left\{
+ h_\ell(Y_{v \ell} )
+ \exp\left\{
+-c \;
+d(X_{ij\ell},Y_{v \ell} )
+\right\} 
+ \right\}
+}
+{
+\sum_{v^\prime \in \Omega_{ij}}
+\left\{
+\displaystyle
+ \mathop{ \prod_{\ell=1}^{p_s}}_{z_{ij\ell }= 1}
+ \left\{
+ h_\ell(Y_{v \ell} )
+ \exp\left\{
+-c \;
+d(X_{ij\ell},Y_{v \ell} )
+\right\} 
+ \right\}
+\right\}
+}.
+\end{align*}
+
 
 # The Second Appendix, for Fun

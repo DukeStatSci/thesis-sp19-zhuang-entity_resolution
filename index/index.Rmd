@@ -4,8 +4,6 @@ date: 'April 2019'
 institution: 'Duke University'
 division: 'Trinity College of Arts and Sciences'
 advisor: 'Rebecca Steorts'
-# altadvisor: 'Your Other Advisor'
-# Delete line 7 if you only have one advisor
 committeememberone: 'Amy Herring'
 committeemembertwo: 'Jerry Reiter'
 dus: 'Amy Herring'

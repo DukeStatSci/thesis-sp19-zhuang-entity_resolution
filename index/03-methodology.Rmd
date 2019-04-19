@@ -91,7 +91,7 @@ h_\ell(v)=\left\{\sum_{w\in S_\ell}\exp\!\left[-c\,d(v,w)\right]\right\}^{-1},
 \]
 i.e., $h_\ell(v)$ is the normalizing constant for the distribution
 $F_\ell(v)$.  We can compute $h_\ell(v)$ in advance for each possible
-$v\in S_\ell$. After some simplification, the joint posterior of \cite{steorts15entity} becomes (where the full conditional distributions are derived in Appendix \ref{app:joint}): 
+$v\in S_\ell$. After some simplification, the joint posterior of \cite{steorts15entity} becomes (where the full conditional distributions are derived in Appendix \@ref(appendix-A)): 
 \begin{align*}
 &\pi(\boldLambda,\boldY,\bz,\boldbeta \mid \bX)\\
 %&\propto
