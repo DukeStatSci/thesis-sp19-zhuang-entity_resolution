@@ -1,0 +1,289 @@
+<!-- Required to number equations in HTML files -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+# Methodology {#methodology}
+In this section, we first give notation and assumptions that is used throughout 
+the rest of the paper in Section \@ref(notation). 
+We then review prior work that we build upon in Section \@ref(foundation), before describing
+the attribute similarity measure in Section \@ref(similarity).
+In Section \@ref(model) we outline the proposed generative process of entity resolution. 
+In Section \@ref(bnp) we describe the use of Bayesian nonparametric prior on the linkage structure.
+Finally, we provide the posterior distribution under our proposed model in Section \@ref(posterior).
+
+## Notation and Assumptions {#notation}
+Let $i\in\{1,\ldots,D\}$ index databases and $j\in\{1,\ldots,R_i\}$ index records within each database. Allow $j'\in\{1,\ldots,N\}$ index true individuals, where $N=\sum_{i=1}^D R_i$ without loss of generality. Our indexing allows for categorical or string-field data. (For example, if the categorical data is thought to be reliable, we would like to avoid comparisons of gender. On the other hand, text-style data, such as name and address should be treated as strings.) Given this, let $\ell\in\{1,\ldots,p_s\}$ index string-valued fields, and let $\ell\in\{p_s+1,\ldots,p_s+p_c\}$ index categorical fields.
+
+Using the same notation as \cite{steorts15entity}, $X_{ij\ell}$ denotes the observed value of the $\ell$th field for the $j$th record in the $i$th database and it is assumed to be a noisy observation of $Y_{j'\ell}$ denotes the true value of the $\ell$th field for the $j'$th latent individual. Additionally, we incorporate the possibility that some attributes $X_{ij\ell}$ may be missing at random through a corresponding observed indicator $O_{ij\ell}$. $O_{ijl} = 1$ implies that $X_{ijl}$ is observed and $O_{ijl} = 0$ implies that $X_{ijl}$ is missing.  We also define $\bX^{obs} = \{X_{ijl} : O_{ijl} = 1\}$ as the observed part and $\bX^{miss} = \{X_{ijl} : O_{ijl} = 0\}$ as the missing part of $\bX$.
+Let $\lambda_{ij}$ denote the assigned latent individual to which the
+$j$th record in the $i$th database corresponds, i.e., $X_{ij\ell}$ and $Y_{j'\ell}$
+represent the same individual if and only if $\lambda_{ij}=j'$. Finally, allow
+the distortion parameter to be $z_{ij\ell}=I(X_{ij\ell}\ne Y_{\lambda_{ij}\ell})$.
+
+We next introduce notation for empirical distributions.
+For each $\ell\in\{1,\ldots,p_s+p_c\}$, let $S_\ell$ denote the set of *all* values for the $\ell$th field
+that occur anywhere in the data, i.e., $S_\ell=\{X_{ij\ell}:1\le i\le D, 1\le j\le R_i\}.$
+Define $\alpha_\ell(v)=\frac{1}{N}\sum_{i=1}^D\sum_{j=1}^{R_i}I(X_{ij\ell}=v)$ to be the relative frequency of $v$ in data for field $\ell$.
+
+For each $\ell\in\{1,\ldots,p_s\}$ and all possible values $v\in S_\ell$, let $F_\ell(v)$ denote the distribution defined as follows: If $W \sim F_\ell(v)$, then for every $w\in S_\ell$,
+\[
+P(W=w)=\frac{\alpha_\ell(w)\,\exp\!\left[-c\,d(v,w)\right]}{\sum_{w\in S_\ell}\alpha_\ell(w)\,\exp\!\left[-c\,d(v,w)\right]}\propto\alpha_\ell(w)\,\exp\!\left[-c\,d(v,w)\right],
+\]
+where $d(\cdot,\cdot)$ is a string similarity measure and $c>0$.
+
+***Remark**: $F_{\ell}$ is used to choose values proportional to their empirical frequency, while placing more weight on those that are more "similar" to $w$ in terms of the similarity measure. This intuitively says that the distorted values are likely to be close to the truth. A more detailed discussion about the string similarity measure can be found in Section \@ref(foundation).*
+
+For each $\ell\in\{1,\ldots,p_s+p_c\}$, let $G_\ell$ denote the empirical distribution of the data in the $\ell$th field from all records in all databases combined.  In other words, if a random variable $W$ has distribution $G_\ell$, then for every $w\in S_\ell$,
+\[
+P(W=w)=\alpha_\ell(w).
+%\frac{1}{N}\sum_{i=1}^k\sum_{j=1}^{n_i}I(X_{ij\ell}=w)\\
+%&=\text{relative frequency of $w$ in the data for field $\ell$}.
+\]
+
+***Remark**: $G_\ell$ depends on the values of $\bX$. However, the idea is that we construct $G_\ell$ \emph{before} doing any computations with the model. So although $G_\ell$ "depends on" $\bX$ when we construct it, we don't treat $G_\ell$ as if it depends on $\bX$ when we plug it into the model. We construct $G_\ell$ using $\bX$, but then we "forget" where $G_\ell$ came from when we use it in the model. This is exactly the same thing that happens---conceptually---in any empirical Bayesian procedure. As usual, let $\delta(v)$ denote the distribution of a random variable that takes the value $v$ with probability $1$.*
+
+A summary of notation is provided in Table \@ref(tab:notation).
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+Symbol                             Description                                  Symbol                            Description
+--------------------------------- -------------------------------------------- --------------------------------- --------------------------------------------
+$i \in 1 \ldots D$                index over databases                         $y_{j'\ell}$                       attribute $\ell$ for entity $j'$                         
+
+$j \in 1 \ldots R_i$              index over records in db $i$                 $\lambda_{ij}$                     assigned entity for record $j$ in db $i$ 
+
+$j' \in 1 \ldots N$               index over true individuals                  $\beta_{i\ell}$                    prob.\ attribute $\ell$ in db $i$ is distorted
+ 
+$\ell \in 1 \ldots p_s + p_c$     index over attributes                        $a_{\ell}, b_{\ell}$               distortion hyperparams.\ for attribute $\ell$
+
+$v\in1\ldots|\mathcal{S}_{\ell}|$ index over domain of attribute $\ell$        $\vartheta, \sigma$                BNP hyperparams.\ for clustering
+
+$\mathcal{S}_{\ell}$              domain of attribute $\ell$                   $R = \sum_{i} R_i$                 total number of records
+
+$\alpha_{\ell}(\cdot)$            distribution over domain of attribute $\ell$ $\simfn_{\ell}(\cdot, \cdot)$      similarity measure for attribute $\ell$
+
+$X_{ij\ell}$                      attribute $\ell$ for record $j$ in table $i$ $z_{ij\ell}$                       distortion indicator for $X_{ij\ell}$ 
+
+$O_{ij\ell}$                      observed indicator for $X_{ij\ell}$
+--------------------------------- -------------------------------------------- --------------------------------- --------------------------------------------
+Table: (\#tab:notation) Summary of notation 
+
+
+## Background on Empirical Bayesian Entity Resolution {#foundation}
+We review the end-to-end entity resolution framework of \cite{steorts15entity} that lays the foundation. Assuming the notation defined above, the generative model can be written as:
+\begin{align*}
+X_{ij\ell}\mid \lambda_{ij},\,Y_{\lambda_{ij}\ell},\,z_{ij\ell}\;&\sim\begin{cases}\delta(Y_{\lambda_{ij}\ell})&\text{ if }z_{ij\ell}=0\\F_\ell(Y_{\lambda_{ij}\ell})&\text{ if }z_{ij\ell}=1\text{ and }\ell\le p_s\\G_\ell&\text{ if }z_{ij\ell}=1\text{ and }\ell>p_s\end{cases}\\
+%&\qquad\text{for each }i\in\{1,\ldots,k\},\; j\in\{1,\ldots,n_i\},\; \ell\in\{1,\ldots,p_s+p_c\},\\
+%&\qquad\text{with everything independent},\\
+Y_{j'\ell}\;&\sim G_\ell\\
+z_{ij\ell}\mid\beta_{i\ell}\;&\sim \text{Bernoulli}(\beta_{i\ell})\\
+\beta_{i\ell}\;&\sim\text{Beta}(a,b)\\
+\lambda_{ij}\;&\sim\text{DiscreteUniform}(1,\ldots,N)
+\end{align*}
+with everything independent of everything else. Since duplication is allowed within databases, any record can correspond to any latent individual. Hence, we can specify the prior the linkage structure by specifying it independently for each $\lambda_{ij}$ as shown above.
+
+We now give the joint posterior and full conditionals. 
+For each $v\in S_\ell$, define 
+\[
+h_\ell(v)=\left\{\sum_{w\in S_\ell}\exp\!\left[-c\,d(v,w)\right]\right\}^{-1},
+\]
+i.e., $h_\ell(v)$ is the normalizing constant for the distribution
+$F_\ell(v)$.  We can compute $h_\ell(v)$ in advance for each possible
+$v\in S_\ell$. After some simplification, the joint posterior of \cite{steorts15entity} becomes (where the full conditional distributions are derived in Appendix \ref{app:joint}): 
+\begin{align*}
+&\pi(\boldLambda,\boldY,\bz,\boldbeta \mid \bX)\\
+%&\propto
+%\prod_{i=1}^k\prod_{j=1}^{n_i}\left(
+%\left\{\mathop{\prod_{\ell=1}^{p_s+p_c}}_{z_{ij\ell}=0}I(X_{ij\ell}=Y_{\lambda_{ij}\ell})\right\}\left\{\mathop{\prod_{\ell=1}^{p_s+p_c}}_{z_{ij\ell}=1}\alpha_\ell(X_{ij\ell})\right\}\left\{\mathop{\prod_{\ell=1}^{p_s}}_{z_{ij\ell}=1}h_\ell(Y_{\lambda_{ij}\ell})\right\}\right.\\
+%&\qquad\qquad\qquad\left.\times\exp\!\left[-c
+%\sum_{\ell=1}^{p_s}z_{ij\ell}\,
+%d(X_{ij\ell},Y_{\lambda_{ij}\ell})\right]
+%\right)\\
+%&\qquad\times\left[\prod_{j'=1}^N\prod_{\ell=1}^{p_s+p_c}\alpha_\ell(Y_{j'\ell})\right]\left[\prod_{i=1}^k\prod_{\ell=1}^{p_s+p_c}\beta_{i\ell}^{\sum_{j=1}^{n_i}z_{ij\ell}+a-1}(1-\beta_{i\ell})^{n_i-\sum_{j=1}^{n_i}z_{ij\ell}+b-1}\right]\\
+&\propto
+\prod_{i=1}^D\prod_{j=1}^{R_i}\left\{
+\left[\mathop{\prod_{\ell=1}^{p_s+p_c}}_{z_{ij\ell}=1}\alpha_\ell(X_{ij\ell})\right]\left[\mathop{\prod_{\ell=1}^{p_s}}_{z_{ij\ell}=1}h_\ell(Y_{\lambda_{ij}\ell})\right]\exp\!\left[-c
+\sum_{\ell=1}^{p_s}z_{ij\ell}\,
+d(X_{ij\ell},Y_{\lambda_{ij}\ell})\right]
+\right\}\\
+&\qquad\times\left[\prod_{j'=1}^N\prod_{\ell=1}^{p_s+p_c}\alpha_\ell(Y_{j'\ell})\right]\left[\prod_{i=1}^D\prod_{\ell=1}^{p_s+p_c}\beta_{i\ell}^{\sum_{j=1}^{n_i}z_{ij\ell}+a-1}(1-\beta_{i\ell})^{n_i-\sum_{j=1}^{n_i}z_{ij\ell}+b-1}\right]\\
+&\qquad\times I(X_{ij\ell}=Y_{\lambda_{ij}\ell}\text{ for all }i,j,\ell\text{ such that }z_{ij\ell}=0).
+\end{align*}
+
+## Attribute Similarity Measures {#similarity}
+In this section, we review the attribute similarity measures defined by \cite{marchant_2019}. 
+
+```{definition, name="Attribute similarity measure", label="attribute-sim-measure"}
+Let $\valset$ be the domain of an attribute. An \emph{attribute similarity measure} on $\valset$ is a function $\simfn: \valset \times \valset \to [0, s_\mathrm{max}]$ that satisfies $0 \leq s_\mathrm{max} < \infty$ and $\simfn(v,w) = \simfn(w,v)$ for all $v, w \in \valset$.
+```
+
+
+These similarity measures is used to quantify the likelihood that some value $v$ in the empirical distribution gets chosen as a distortion of the true value $w$.
+Although the parameterization of attribute similarity is different from the distance measure of \cite{steorts15entity}, \cite{marchant_2019} proved that the two parameterization is in fact equivalent, as long as the distance measure is bounded and symmetric. We refer the readers to \cite{marchant_2019} for detailed proofs of this result. 
+
+During the process of inference, these similarities for the attributes may be expensive to evaluate on-the-fly, so \cite{marchant_2019} consider caching and truncation of attribute similarities. Only similarities for pairs of values that fall above a cut-off $S_{cut;\ell}$ are being stored. This is achieved through the following truncation transformation to the raw attribute similarity $\simfn_{\ell}(v,w)$:
+\begin{equation}
+\truncsimfn_{\ell}(v,w) = 
+  \max \left(0, \ \frac{\simfn_{\ell}(v,w) - s_{\mathrm{cut};\ell}}
+    {1 - s_{\mathrm{cut};\ell}/s_{\mathrm{max};\ell}} \right).
+\end{equation}
+Pairs of values not present in the cache have a truncated similarity of zero by default. We refer readers to Section 6.2 of the paper for discussions about this efficiency consideration.
+
+In this section we also discuss what the appropriate distance functions for the 
+UNTC data would be like. Distances such as the Levenshtein distance would perform poorly because of situations like a dropped name or a re-ordered name would imply a large edit distance. 
+Instead, we consider the Monge-Elkan distance of \cite{monge_elkan_1997}, a hybrid similarity measure, that seems more appropriate as it is insensitive to the variations above. We define Monge-Elkan distance as
+\begin{equation}
+\texttt{sim}_{\ell}^{\text{M-E}}(A,B) = \frac{1}{|A|} \sum_{a \in A} \max_{b \in B} \texttt{sim}_{\ell}^{\prime}(a,b)
+\end{equation}
+where $A,B$ are attributes with several words (e.g. JOSE TITO), $a \in A, b\in B$ are words in an attribute (e.g. JOSE), and $\texttt{sim}^{\prime}$ is a base similarity measure (such as the normalized edit similarity). With this formulation, we thus compare average similarity between all existing words in the two attributes, ignoring the ordering of them. 
+We then define the asymmetric similarity function that we use for the string attributes in the UNTC data:
+$$
+\texttt{sim}_{\ell}(A,B) = 
+\begin{cases}  0 &\mbox{if } |A| < |B| \\ 
+\texttt{sim}_{\ell}^{\text{M-E}}(A,B)  & \text{otherwise.} \end{cases}
+$$
+If attribute $A$ contains fewer words than attribute $B$, then we immediately treat $A$ as not similar to $B$. Otherwise we use the Monge-Elkan distance to measure their similarity. 
+
+## Model Specification {#model}
+We now describe the generative process of our proposed model.  
+
+\paragraph{Latent entities.} The model assumes a total of $N$ latent entities whose attributes have the true values. 
+The value of attribute $\ell$ from the $j'$ latent entity is to be drawn independently from the empirical distribution:
+\[
+Y_{j'\ell} \sim G_{\ell}.
+\]
+
+\paragraph{Distortions.} We draw a distortion probability for each attribute $\ell$ in database $i$ assuming
+\[
+\beta_{i\ell} | a_{\ell}, b_{\ell} \sim Beta(a_{\ell}, b_{\ell}),
+\]
+where $a_{\ell}, b_{\ell}$ are hyperparameters that we tune. 
+
+\paragraph{Records.} We assume the records are generated one after another in an iterative fashion.
+Different from \cite{steorts15entity}, we no longer do so by selecting a latent entity uniformly at random. 
+Instead, we incorporate subjective, more flexible priors on the linkage structure $\Lambda$. The generative process is described below. 
+
+(a) Draw a latent entity assignment from a Bayesian nonparametric prior. Specifically, we consider the Pitman Yor Process prior and the Dirichlet Process prior (generalized as BNP Prior here):
+\[
+\lambda_{ij} \sim \text{BNP Prior}(\vartheta, \sigma),
+\]
+where $\vartheta$ and $\sigma$ are the hyperparameters of these two BNP priors. We provide details about the two priors in Section \ref{sec:bnp}.
+
+(b) For attribute $\ell$ of record $j$ in database $i$, draw a distortion indicator $z_{ij\ell}$:
+\[
+z_{ij\ell} | \beta_{i\ell} \sim Bernoulli(\beta_{i\ell}).
+\]
+
+(c) Draw the record value $X_{ij\ell}$ from a hit-or-miss model (different from the model of \cite{steorts15entity}, we also incorporate attribute similarity measures to categorical fields):
+\[
+X_{ij\ell} | \lambda_{ij},\,Y_{\lambda_{ij}\ell},\,z_{ij\ell} \sim (1 - z_{ij\ell}) \delta(Y_{\lambda_{ij}\ell}) + z_{ij\ell} \phi(X_{ij\ell} | Y_{\lambda_{ij}\ell}),
+\]
+where
+\[
+\phi(X_{ij\ell} = w| Y_{\lambda_{ij}\ell}) = \frac{\alpha_\ell(w)\,\exp\!\left[-c\,d(w,Y_{\lambda_{ij}\ell})\right]}{\sum_{w\in S_\ell}\alpha_\ell(w)\,\exp\!\left[-c\,d(w,Y_{\lambda_{ij}\ell})\right]}\propto\alpha_\ell(w)\,\exp\!\left[-c\,d(w,Y_{\lambda_{ij}\ell})\right]
+\]
+for all attributes string-valued and categorical. 
+If $z_{ij\ell}=0$ or no distortion, then the value of $X_{ij\ell}$ is exactly that of the corresponding latent entity. 
+If $z_{ij\ell}=1$ or distortion, $X_{ij\ell}$ is then drawn from a weighted empirical distribution, with similarity measures. 
+Equivalently, given the result of \cite{marchant_2019}, we can write 
+\[
+\phi(X_{ij\ell} = w| Y_{\lambda_{ij}\ell}) = \frac{\alpha_\ell(w)\,\exp\!\left[\simfn_{\ell}(w, Y_{\lambda_{ij}\ell})\right]}{\sum_{w\in S_\ell}\alpha_\ell(w)\,\exp\!\left[\simfn_{\ell}(w, Y_{\lambda_{ij}\ell})\right]}\propto\alpha_\ell(w)\,\exp\!\left[\simfn_{\ell}(w, Y_{\lambda_{ij}\ell})\right].
+\]
+
+## Entity Resolution with the Bayesian Nonparametric Priors {#bnp}
+The empirical Bayesian approach (EB) of \citep{steorts15entity} uses a uniform prior to model the prior distribution of the linkage structure $\lam$. 
+The uniform prior assumes that every legitimate configuration of the $\lambda_{ij}$ is equally likely a priori, and this implies a default prior on related quantities, such as the number of individuals in the data \citep{steorts_bayesian_2016}. 
+Moreover, each record is assumed to be equally likely to correspond to any of the $N$ possible latent individuals a priori. 
+While the choice of uniform prior is convenient and simplifies the computation of the posterior, there are several weaknesses that should be addressed. 
+Firstly, the uniform prior is constructed under the assumption that the $N$ total records are randomly sampled with replacement from a population of $N$ total latent individuals. 
+This turns out to be quite a strong assumption on the linkage structure. We assume that the total number of latent individuals has the same size as the sample. 
+We also restrict the latent population size to be maximum $N$, and not considering the case that the latent population size being greater than $N$. 
+Secondly, \citep{steorts_bayesian_2016} showed that even though the uniform prior is often regarded as an non-informative prior, it is actually highly informative in the EB model because under certain conditions the data will not be able to overwhelm the prior, which defeats the purpose of developing a Bayesian model. 
+
+For the above reasons, we consider more well-principled, subjective priors for the linkage prior. 
+More specifically, we consider the Pitman-Yor prior (PYP). 
+We first present notation that is used throughout the remainder of the paper and then derive the full conditional distributions. In terms of inference, we implement a standard Gibbs sampler. 
+(We also consider the case of the Dirichlet process prior in our experiments given that this prior is a special case of the PYP). 
+
+\paragraph{PYP prior. } The PYP prior is adapted from (Pitman, 2006). Assume a total of $D$ databases. Assume that $\lambda_{1,1}, ..., \lambda_{i,j-1}$ are already classified into $k_{i,j-1}$ clusters identified by the population labels $j'_1, ..., j'_{k_{i,j-1}}$. The clusters have sizes $n_1, ..., n_{k_{i,j-1}}$ respectively. In our context this means $\lambda$'s that belong to the same cluster \textit{coreference} the same latent entity. Let $N_{i,j-1}$ denote the total number of these records. We now consider the classification of $\lambda_{ij}$, the label of the latent individual to which the $j$th record in the $i$th database corresponds. Recall that the PYP has three parameters, a \textit{concentration} parameter $\vartheta$, a \textit{discount} parameter $\sigma$, and a base distribution $H_0$.
+Under the PYP prior, $\lambda_{ij}$ will either identify a new cluster with probability
+\begin{equation*}
+P(\lambda_{ij} \sim H_0 |  \lambda_{1,1}, ..., \lambda_{i, j-1}, \vartheta, \sigma, H_0) = \frac{k_{i,j-1}\sigma + \vartheta}{N_{i,j-1} + \vartheta},
+\end{equation*}
+or identify with an existing cluster with probability 
+\begin{equation*}
+P(\lambda_{ij} = j'_g \in \{j'_1, ..., j'_{k_{i,j-1}}\}|  \lambda_{1,1}, ..., \lambda_{i, j-1},  \vartheta, \sigma, H_0) = \frac{n_g - \sigma}{N_{i,j-1} + \vartheta},
+\end{equation*}
+where the admissible values for the parameters are $\sigma \in [0,1)$ with $\vartheta > -\sigma$ or $\sigma < 0$ with $\vartheta = m|\sigma|$ for some positive integer $m$. Together $\vartheta$ and $\sigma$ control the formation of new cluster. The discount parameter $\sigma$ reduces the probability of adding a new record into the existing cluster. The PYP prior yields power-law behavior in terms of cluster behavior when $0 < \sigma < 1$. In addition, there is an obvious characteristic of the PYP prior, which is that the probability of a new record joining an existing cluster is proportional to the size of that cluster. So new records are more likely to join existing large clusters rather than a new cluster. This is often referred to as the "rich-get-richer" characteristic (Wallach, 2010).
+
+Note that under the PYP framework, we allow the latent population size to be greater than $N$, which will be more applicable to real world scenarios. In addition, the results of this process are exchangeable, meaning the order in which the $\lambda$'s identify with the clusters does not affect the probability of the final distribution, which is a desirable property of non-uniform priors. 
+
+The above probabilities induce a prior on the set of all possible partitions of the $N$ records which is 
+\begin{equation*}
+P(Z(\lambda) = z) = \frac{(\vartheta+\sigma)_{k-1, \sigma}}{(\vartheta+1)_{N-1,1}} \prod^{k}_{g=1} (1-\sigma)_{n_g - 1, 1},
+\end{equation*}
+where $\{n_1, ...n_k \}$ are the cluster sizes of a particular partition $z$, and $x_{r,s} = x(x+s)...(x+(r-1)s)$ (Pitman, 2006). It can also be proved that under this prior setup, the expected value of the number of clusters in partition $z$, $k(z)$, is
+\begin{equation} \label{eqn:1}
+E(k(z)) = \sum^{N}_{i=1} \frac{(\vartheta+\sigma)_{(i-1)\uparrow}} {(\vartheta+1)_{(i-1)\uparrow}} = \frac{\vartheta}{\sigma} \Bigg[ \frac{(\vartheta+\sigma)_{N \uparrow}}{(\vartheta)_{N \uparrow}} -1 \Bigg]
+\end{equation}
+and the variance is
+\begin{equation} \label{eqn:2}
+Var(k(z)) = \frac{\vartheta (\vartheta+\sigma)}{\sigma^2} \frac{(\vartheta+2\sigma)_{N\uparrow}}{(\vartheta)_{N\uparrow}} - \frac{\vartheta^2}{\sigma^2} \Bigg(\frac{(\vartheta+\sigma)_{N \uparrow}}{(\vartheta)_{N \uparrow}} \Bigg)^2 - \frac{\vartheta}{\sigma} \frac{(\vartheta+\sigma)_{N \uparrow}}{(\vartheta)_{N \uparrow}}
+\end{equation}
+with $x_{s\uparrow} = \Gamma(x+s) / \Gamma(x)$.
+
+We use the equations of expectation and variance for prior elicitation by selecting $\vartheta$ and $\sigma$ to have $E(k(z))$ equal to a rough prior guess of the number of clusters and $Var(k(z))$ equal to a specific amount of prior variability in the number of clusters.
+
+\paragraph{DP prior. } The Dirichlet Process (DP) is a special case of the Pitman-Yor Process when the discount parameter $\sigma = 0$. Recall the definition of Dirichlet Process:
+\[
+G \sim DP(\vartheta, H_0)
+\]
+if for any partition $(A_1, ..., A_k)$ of $I{X}$:
+\[
+\left( G(A_1), ..., G(A_k) \right) \sim \text{Dirichlet} \left( \vartheta H_0(A_1), ..., \vartheta H_0(A_k) \right)
+\]
+where $H_0$ is the base distribution, and $\vartheta$ is the concentration parameter. 
+Under a DP prior, similar to the PYP prior, the predictive probability of cluster membership of all records constructs a partition of these records sequentially. 
+Under the DP prior, $\lambda_{ij}$ will either identify a new cluster with probability (Wallach, 2010). 
+\begin{equation*}
+P(\lambda_{ij} \sim H_0 |  \lambda_{1,1}, ..., \lambda_{i, j-1}, \vartheta, H_0) = \frac{\vartheta}{N_{i,j-1} + \vartheta},
+\end{equation*}
+or identify with an existing cluster with probability 
+\begin{equation*}
+P(\lambda_{ij} = j'_g \in \{j'_1, ..., j'_{k_{i,j-1}}\}|  \lambda_{1,1}, ..., \lambda_{i, j-1},  \vartheta, H_0) = \frac{n_g}{N_{i,j-1} + \vartheta}.
+\end{equation*}
+
+## Posterior Joint Distribution {#posterior}
+For the context of our problem, we will assume that the data is missing at random (MAR), that is, $\bO$ and $\bX$ are statistically independent and that the distribution of $\bO$ does not depend on the hyperparameters. Let $\bX^{obs} = \{X_{ijl} : O_{ijl} = 1\}$ and $\bX^{miss} = \{X_{ijl} : O_{ijl} = 0\}$. Let $\bTheta = \{a, b, \vartheta, \sigma\}$. We obtain the following expression by integrating out the missing attributes
+
+\begin{equation*}
+\small
+\begin{split}
+& p(\lam, \boldY, \boldz, \boldbeta, \bTheta, \bX^{miss} | \bX^{obs}, \bO) \\
+& \propto p(\boldbeta | \bTheta) \times p(\boldz | \boldbeta, \bTheta) \times p(\lam | \bTheta) \times p(\boldY) \\
+& \quad \times p(\bX^{miss} | \lam, \boldY, \boldz) \times p(\bX^{obs} | \lam, \boldY, \boldz) \\
+& \propto \left[ \prod\limits_i^{D} \prod\limits_{\ell}^{p_s+p_c} \beta_{i\ell}^{a-1} (1-\beta_{i\ell})^{b-1} \right] \times \left[ \prod\limits_i^{D} \prod\limits_j^{R_i} \prod\limits_{\ell}^{p_s+p_c}  \beta_{i \ell}^{z_{ij\ell}} (1-\beta_{i\ell})^{1-z_{ij\ell}} \right] \times \left[ \prod\limits_{j'}^{N} \prod\limits_{\ell}^{p_s+p_c} \alpha_{\ell} (Y_{j'\ell}) \right] \\
+& \quad \times \left[ \prod\limits_{ij\ell \text{ s.t. } O_{ij\ell}=1} z_{ij\ell} \cdot \phi(X_{ij\ell} | Y_{\lambda_{ij}\ell}) + (1-z_{ij\ell}) I(X_{ij\ell} = Y_{\lambda_{ij}\ell}) \right] \\
+& \quad \times \left[ \prod\limits_i^{D} \prod\limits_j^{R_i} I(\lambda_{ij} = \text{"new"}) \frac{k_{ij}\sigma + \vartheta}{N_{ij} + \vartheta} + I(\lambda_{ij} = j'_g \in \{j'_1, ..., j'_{k_{i,j-1}}\}) \frac{n_g - \sigma}{N_{ij} + \vartheta} \right].
+\end{split}
+(\#eq:3)
+\end{equation*}
+
+We now derive the full conditional distribution of $\boldLambda$ under the PYP prior:
+
+\begin{equation*}
+\small
+\begin{split}
+& p(\boldLambda | \boldY, \boldz, \boldbeta, \boldX^{miss}, \bX^{obs}) \\
+& \propto p(\lam | \bTheta) \times p(\bX^{obs} | \lam, \boldY, \boldz) \\
+& \propto \left[ \prod\limits_i^{D} \prod\limits_j^{R_i} I(\lambda_{ij} = \text{"new"}) \frac{k_{ij}\sigma + \vartheta}{N_{ij} + \vartheta} + I(\lambda_{ij} = j'_g \in \{j'_1, ..., j'_{k_{i,j-1}}\}) \frac{n_g - \sigma}{N_{ij} + \vartheta} \right] \\
+& \quad \times \left[ \prod\limits_{ij\ell \text{ s.t. } O_{ij\ell}=1} (1-z_{ij\ell}) \delta(Y_{\lambda_{ij}\ell})  + z_{ij\ell} \cdot \phi(X_{ij\ell} | Y_{\lambda_{ij}\ell}) \right].
+\end{split}
+\end{equation*}
+
+The full conditional distributions for other parameters remain the same as in \citep{steorts15entity} and we show them in Appendix \ref{app:joint}. The full conditional distributions under 
+ the DP framework is only different from that under the PYP framework in the cluster 
+ assignment probabilities $P(\lambda_{ij} \sim H_0 |  \lambda_{1,1}, ..., \lambda_{i, j-1}, \vartheta, H_0)$ and $P(\lambda_{ij} = j'_g \in \{j'_1, ..., j'_{k_{i,j-1}}\}|  \lambda_{1,1}, ..., \lambda_{i, j-1}, \vartheta, H_0)$. 
+

@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Entity Resolution with an Application to the El Salvadoran Conflict</title>
-  <meta name="description" content="Entity Resolution with an Application to the El Salvadoran Conflict">
+  <title>Chapter 4 Application To Synthetic Data | Entity Resolution with an Application to the El Salvadoran Conflict</title>
+  <meta name="description" content="Chapter 4 Application To Synthetic Data | Entity Resolution with an Application to the El Salvadoran Conflict">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Entity Resolution with an Application to the El Salvadoran Conflict" />
+  <meta property="og:title" content="Chapter 4 Application To Synthetic Data | Entity Resolution with an Application to the El Salvadoran Conflict" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Entity Resolution with an Application to the El Salvadoran Conflict" />
+  <meta name="twitter:title" content="Chapter 4 Application To Synthetic Data | Entity Resolution with an Application to the El Salvadoran Conflict" />
   
   
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
-<link rel="next" href="acknowledgements.html">
+<link rel="prev" href="methodology.html">
+<link rel="next" href="elsalvador.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -171,23 +171,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Entity Resolution with an Application to the El Salvadoran Conflict</h1>
-<p class="author"><em>Bihan Zhuang</em></p>
-<p class="date"><em>April 2019</em></p>
+<div id="synthetic" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> Application To Synthetic Data</h1>
+<div id="synthetic-experiments" class="section level2">
+<h2><span class="header-section-number">4.1</span> Experiments</h2>
 </div>
-<div id="abstract" class="section level1 unnumbered">
-<h1>Abstract</h1>
-<p>Entity resolution (record linkage or de-duplication) is the process of removing duplicate entities in large, noisy databases. Entity resolution is made even more difficult when unique identifiers are not present and many of the observed records are subject to missing values. Furthermore, entity resolution has tradeoffs regarding assumptions of the data generation process, error rates, and computational scalability that make it a difficult task for real applications. In this paper, we are motivated to study a real data set from El Salvador, where a Truth Commission formed by the United Nations in 1992 collected data on killings that occurred during the Salvadoran civil war (1980-1991). Due to the data collection process, victims can be duplicated, as they may have been reported by different relatives, friends, or grass roots teams working in the area. Our motivation is to be able (1) to build flexible and robust models that are computationally fast, (2) to better understand what types of models are well suited for conflict data, (3) and finally provide estimates and evaluations of the number of documented identifiable deaths for our motivating data set.</p>
-<p><em>Keywords</em>: record linkage, entity resolution, de-duplication, conflict data, Bayesian methods, El Salvador</p>
+<div id="discussion-of-application-on-rldata500" class="section level2">
+<h2><span class="header-section-number">4.2</span> Discussion of Application on RLdata500</h2>
+<p>In this section, we briefly summarize our results on the RLdata500 data set. Under the best settings described in Section <a href="synthetic.html#synthetic-experiments">4.1</a>, the PYP prior overall performs the best in terms of the precision (1), recall (0.98) with a 95 percent credible interval of [451, 457]. There is a tendency for the PYP to slightly overestimate the true value of number of unique records, whereas the DP and Uniform prior consistently underestimate the true value. All methods tend to have a balance between the recall and precision, which is a desired property in the field of entity resolution. In terms of computational complexity, the uniform prior is the slowest to mix, which is not unexpected given the fact that we are starting from a very unlikely configuration of the linkage structure. This results in the Gibbs sampler to need to be run for much longer compared to the PYP or DP prior. For example, if we have some idea about the true number of clusters of the existing population apriori, we are able to provide guidance regarding the two unknown parameters of the PYP prior. We are able to provide similar guidance for the DP prior. This in turn allows for faster mixing and a faster computational time of the Gibbs sampler.</p>
+
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="acknowledgements.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="methodology.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="elsalvador.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

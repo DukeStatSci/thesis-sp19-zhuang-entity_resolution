@@ -1,4 +1,4 @@
-# Math typesetting {#math}
+# Current Approaches to Record Linkage {#priorworks}
 
 <!-- Required to number equations in HTML files -->
 <script type="text/x-mathjax-config">

@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 3 Methodology | Entity Resolution with an Application to the El Salvadoran Conflict</title>
+  <meta name="description" content="Chapter 3 Methodology | Entity Resolution with an Application to the El Salvadoran Conflict">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 3 Methodology | Entity Resolution with an Application to the El Salvadoran Conflict" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Methodology | Entity Resolution with an Application to the El Salvadoran Conflict" />
+  
+  
+  
+
+<meta name="author" content="Bihan Zhuang">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="priorworks.html">
+<link rel="next" href="synthetic.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Abstract</a></li>
+<li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#UNTC"><i class="fa fa-check"></i><b>1.1</b> The United Nations Truth Commission for El Salvador</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="priorworks.html"><a href="priorworks.html"><i class="fa fa-check"></i><b>2</b> Current Approaches to Record Linkage</a><ul>
+<li class="chapter" data-level="2.1" data-path="priorworks.html"><a href="priorworks.html#math"><i class="fa fa-check"></i><b>2.1</b> Math</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="methodology.html"><a href="methodology.html"><i class="fa fa-check"></i><b>3</b> Methodology</a><ul>
+<li class="chapter" data-level="3.1" data-path="methodology.html"><a href="methodology.html#notation"><i class="fa fa-check"></i><b>3.1</b> Notation and Assumptions</a></li>
+<li class="chapter" data-level="3.2" data-path="methodology.html"><a href="methodology.html#foundation"><i class="fa fa-check"></i><b>3.2</b> Background on Empirical Bayesian Entity Resolution</a></li>
+<li class="chapter" data-level="3.3" data-path="methodology.html"><a href="methodology.html#similarity"><i class="fa fa-check"></i><b>3.3</b> Attribute Similarity Measures</a></li>
+<li class="chapter" data-level="3.4" data-path="methodology.html"><a href="methodology.html#model"><i class="fa fa-check"></i><b>3.4</b> Model Specification</a></li>
+<li class="chapter" data-level="3.5" data-path="methodology.html"><a href="methodology.html#bnp"><i class="fa fa-check"></i><b>3.5</b> Entity Resolution with the Bayesian Nonparametric Priors</a></li>
+<li class="chapter" data-level="3.6" data-path="methodology.html"><a href="methodology.html#posterior"><i class="fa fa-check"></i><b>3.6</b> Posterior Joint Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="synthetic.html"><a href="synthetic.html"><i class="fa fa-check"></i><b>4</b> Application To Synthetic Data</a><ul>
+<li class="chapter" data-level="4.1" data-path="synthetic.html"><a href="synthetic.html#synthetic-experiments"><i class="fa fa-check"></i><b>4.1</b> Experiments</a></li>
+<li class="chapter" data-level="4.2" data-path="synthetic.html"><a href="synthetic.html#discussion-of-application-on-rldata500"><i class="fa fa-check"></i><b>4.2</b> Discussion of Application on RLdata500</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="elsalvador.html"><a href="elsalvador.html"><i class="fa fa-check"></i><b>5</b> Application to El Salvodoran Conflict Data</a><ul>
+<li class="chapter" data-level="5.1" data-path="elsalvador.html"><a href="elsalvador.html#experiments"><i class="fa fa-check"></i><b>5.1</b> Experiments</a></li>
+<li class="chapter" data-level="5.2" data-path="elsalvador.html"><a href="elsalvador.html#discussion-of-application-on-untc-data"><i class="fa fa-check"></i><b>5.2</b> Discussion of Application on UNTC data</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>6</b> Conclusion</a></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="the-first-appendix.html"><a href="the-first-appendix.html"><i class="fa fa-check"></i><b>A</b> The First Appendix</a></li>
+<li class="chapter" data-level="B" data-path="the-second-appendix-for-fun.html"><a href="the-second-appendix-for-fun.html"><i class="fa fa-check"></i><b>B</b> The Second Appendix, for Fun</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Entity Resolution with an Application to the El Salvadoran Conflict</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="methodology" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> Methodology</h1>
+<p>In this section, we first give notation and assumptions that is used throughout
+the rest of the paper in Section <a href="methodology.html#notation">3.1</a>.
+We then review prior work that we build upon in Section <a href="methodology.html#foundation">3.2</a>, before describing
+the attribute similarity measure in Section <a href="methodology.html#similarity">3.3</a>.
+In Section <a href="methodology.html#model">3.4</a> we outline the proposed generative process of entity resolution.
+In Section <a href="methodology.html#bnp">3.5</a> we describe the use of Bayesian nonparametric prior on the linkage structure.
+Finally, we provide the posterior distribution under our proposed model in Section <a href="methodology.html#posterior">3.6</a>.</p>
+<div id="notation" class="section level2">
+<h2><span class="header-section-number">3.1</span> Notation and Assumptions</h2>
+<p>Let <span class="math inline">\(i\in\{1,\ldots,D\}\)</span> index databases and <span class="math inline">\(j\in\{1,\ldots,R_i\}\)</span> index records within each database. Allow <span class="math inline">\(j&#39;\in\{1,\ldots,N\}\)</span> index true individuals, where <span class="math inline">\(N=\sum_{i=1}^D R_i\)</span> without loss of generality. Our indexing allows for categorical or string-field data. (For example, if the categorical data is thought to be reliable, we would like to avoid comparisons of gender. On the other hand, text-style data, such as name and address should be treated as strings.) Given this, let <span class="math inline">\(\ell\in\{1,\ldots,p_s\}\)</span> index string-valued fields, and let <span class="math inline">\(\ell\in\{p_s+1,\ldots,p_s+p_c\}\)</span> index categorical fields.</p>
+<p>Using the same notation as , <span class="math inline">\(X_{ij\ell}\)</span> denotes the observed value of the <span class="math inline">\(\ell\)</span>th field for the <span class="math inline">\(j\)</span>th record in the <span class="math inline">\(i\)</span>th database and it is assumed to be a noisy observation of <span class="math inline">\(Y_{j&#39;\ell}\)</span> denotes the true value of the <span class="math inline">\(\ell\)</span>th field for the <span class="math inline">\(j&#39;\)</span>th latent individual. Additionally, we incorporate the possibility that some attributes <span class="math inline">\(X_{ij\ell}\)</span> may be missing at random through a corresponding observed indicator <span class="math inline">\(O_{ij\ell}\)</span>. <span class="math inline">\(O_{ijl} = 1\)</span> implies that <span class="math inline">\(X_{ijl}\)</span> is observed and <span class="math inline">\(O_{ijl} = 0\)</span> implies that <span class="math inline">\(X_{ijl}\)</span> is missing. We also define <span class="math inline">\(\boldsymbol{X}^{obs} = \{X_{ijl} : O_{ijl} = 1\}\)</span> as the observed part and <span class="math inline">\(\boldsymbol{X}^{miss} = \{X_{ijl} : O_{ijl} = 0\}\)</span> as the missing part of <span class="math inline">\(\boldsymbol{X}\)</span>.
+Let <span class="math inline">\(\lambda_{ij}\)</span> denote the assigned latent individual to which the
+<span class="math inline">\(j\)</span>th record in the <span class="math inline">\(i\)</span>th database corresponds, i.e., <span class="math inline">\(X_{ij\ell}\)</span> and <span class="math inline">\(Y_{j&#39;\ell}\)</span>
+represent the same individual if and only if <span class="math inline">\(\lambda_{ij}=j&#39;\)</span>. Finally, allow
+the distortion parameter to be <span class="math inline">\(z_{ij\ell}=I(X_{ij\ell}\ne Y_{\lambda_{ij}\ell})\)</span>.</p>
+<p>We next introduce notation for empirical distributions.
+For each <span class="math inline">\(\ell\in\{1,\ldots,p_s+p_c\}\)</span>, let <span class="math inline">\(S_\ell\)</span> denote the set of <em>all</em> values for the <span class="math inline">\(\ell\)</span>th field
+that occur anywhere in the data, i.e., <span class="math inline">\(S_\ell=\{X_{ij\ell}:1\le i\le D, 1\le j\le R_i\}.\)</span>
+Define <span class="math inline">\(\alpha_\ell(v)=\frac{1}{N}\sum_{i=1}^D\sum_{j=1}^{R_i}I(X_{ij\ell}=v)\)</span> to be the relative frequency of <span class="math inline">\(v\)</span> in data for field <span class="math inline">\(\ell\)</span>.</p>
+<p>For each <span class="math inline">\(\ell\in\{1,\ldots,p_s\}\)</span> and all possible values <span class="math inline">\(v\in S_\ell\)</span>, let <span class="math inline">\(F_\ell(v)\)</span> denote the distribution defined as follows: If <span class="math inline">\(W \sim F_\ell(v)\)</span>, then for every <span class="math inline">\(w\in S_\ell\)</span>,
+<span class="math display">\[
+P(W=w)=\frac{\alpha_\ell(w)\,\exp\!\left[-c\,d(v,w)\right]}{\sum_{w\in S_\ell}\alpha_\ell(w)\,\exp\!\left[-c\,d(v,w)\right]}\propto\alpha_\ell(w)\,\exp\!\left[-c\,d(v,w)\right],
+\]</span>
+where <span class="math inline">\(d(\cdot,\cdot)\)</span> is a string similarity measure and <span class="math inline">\(c&gt;0\)</span>.</p>
+<p><em><strong>Remark</strong>: <span class="math inline">\(F_{\ell}\)</span> is used to choose values proportional to their empirical frequency, while placing more weight on those that are more “similar” to <span class="math inline">\(w\)</span> in terms of the similarity measure. This intuitively says that the distorted values are likely to be close to the truth. A more detailed discussion about the string similarity measure can be found in Section <a href="methodology.html#foundation">3.2</a>.</em></p>
+<p>For each <span class="math inline">\(\ell\in\{1,\ldots,p_s+p_c\}\)</span>, let <span class="math inline">\(G_\ell\)</span> denote the empirical distribution of the data in the <span class="math inline">\(\ell\)</span>th field from all records in all databases combined. In other words, if a random variable <span class="math inline">\(W\)</span> has distribution <span class="math inline">\(G_\ell\)</span>, then for every <span class="math inline">\(w\in S_\ell\)</span>,
+<span class="math display">\[
+P(W=w)=\alpha_\ell(w).
+%\frac{1}{N}\sum_{i=1}^k\sum_{j=1}^{n_i}I(X_{ij\ell}=w)\\
+%&amp;=\text{relative frequency of $w$ in the data for field $\ell$}.
+\]</span></p>
+<p><em><strong>Remark</strong>: <span class="math inline">\(G_\ell\)</span> depends on the values of <span class="math inline">\(\boldsymbol{X}\)</span>. However, the idea is that we construct <span class="math inline">\(G_\ell\)</span>  doing any computations with the model. So although <span class="math inline">\(G_\ell\)</span> “depends on” <span class="math inline">\(\boldsymbol{X}\)</span> when we construct it, we don’t treat <span class="math inline">\(G_\ell\)</span> as if it depends on <span class="math inline">\(\boldsymbol{X}\)</span> when we plug it into the model. We construct <span class="math inline">\(G_\ell\)</span> using <span class="math inline">\(\boldsymbol{X}\)</span>, but then we “forget” where <span class="math inline">\(G_\ell\)</span> came from when we use it in the model. This is exactly the same thing that happens—conceptually—in any empirical Bayesian procedure. As usual, let <span class="math inline">\(\delta(v)\)</span> denote the distribution of a random variable that takes the value <span class="math inline">\(v\)</span> with probability <span class="math inline">\(1\)</span>.</em></p>
+<p>A summary of notation is provided in Table <a href="methodology.html#tab:notation">3.1</a>.</p>
+<table>
+<caption><span id="tab:notation">Table 3.1: </span> Summary of notation</caption>
+<colgroup>
+<col width="21%" />
+<col width="28%" />
+<col width="21%" />
+<col width="28%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Symbol</th>
+<th align="center">Description</th>
+<th align="center">Symbol</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><span class="math inline">\(i \in 1 \ldots D\)</span></td>
+<td align="center">index over databases</td>
+<td align="center"><span class="math inline">\(y_{j&#39;\ell}\)</span></td>
+<td align="center">attribute <span class="math inline">\(\ell\)</span> for entity <span class="math inline">\(j&#39;\)</span></td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(j \in 1 \ldots R_i\)</span></td>
+<td align="center">index over records in db <span class="math inline">\(i\)</span></td>
+<td align="center"><span class="math inline">\(\lambda_{ij}\)</span></td>
+<td align="center">assigned entity for record <span class="math inline">\(j\)</span> in db <span class="math inline">\(i\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(j&#39; \in 1 \ldots N\)</span></td>
+<td align="center">index over true individuals</td>
+<td align="center"><span class="math inline">\(\beta_{i\ell}\)</span></td>
+<td align="center">prob. attribute <span class="math inline">\(\ell\)</span> in db <span class="math inline">\(i\)</span> is distorted</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\ell \in 1 \ldots p_s + p_c\)</span></td>
+<td align="center">index over attributes</td>
+<td align="center"><span class="math inline">\(a_{\ell}, b_{\ell}\)</span></td>
+<td align="center">distortion hyperparams. for attribute <span class="math inline">\(\ell\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(v\in1\ldots|\mathcal{S}_{\ell}|\)</span></td>
+<td align="center">index over domain of attribute <span class="math inline">\(\ell\)</span></td>
+<td align="center"><span class="math inline">\(\vartheta, \sigma\)</span></td>
+<td align="center">BNP hyperparams. for clustering</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\mathcal{S}_{\ell}\)</span></td>
+<td align="center">domain of attribute <span class="math inline">\(\ell\)</span></td>
+<td align="center"><span class="math inline">\(R = \sum_{i} R_i\)</span></td>
+<td align="center">total number of records</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\alpha_{\ell}(\cdot)\)</span></td>
+<td align="center">distribution over domain of attribute <span class="math inline">\(\ell\)</span></td>
+<td align="center"><span class="math inline">\(\mathtt{sim}_{\ell}(\cdot, \cdot)\)</span></td>
+<td align="center">similarity measure for attribute <span class="math inline">\(\ell\)</span></td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(X_{ij\ell}\)</span></td>
+<td align="center">attribute <span class="math inline">\(\ell\)</span> for record <span class="math inline">\(j\)</span> in table <span class="math inline">\(i\)</span></td>
+<td align="center"><span class="math inline">\(z_{ij\ell}\)</span></td>
+<td align="center">distortion indicator for <span class="math inline">\(X_{ij\ell}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(O_{ij\ell}\)</span></td>
+<td align="center">observed indicator for <span class="math inline">\(X_{ij\ell}\)</span></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="foundation" class="section level2">
+<h2><span class="header-section-number">3.2</span> Background on Empirical Bayesian Entity Resolution</h2>
+<p>We review the end-to-end entity resolution framework of  that lays the foundation. Assuming the notation defined above, the generative model can be written as:
+<span class="math display">\[\begin{align*}
+X_{ij\ell}\mid \lambda_{ij},\,Y_{\lambda_{ij}\ell},\,z_{ij\ell}\;&amp;\sim\begin{cases}\delta(Y_{\lambda_{ij}\ell})&amp;\text{ if }z_{ij\ell}=0\\F_\ell(Y_{\lambda_{ij}\ell})&amp;\text{ if }z_{ij\ell}=1\text{ and }\ell\le p_s\\G_\ell&amp;\text{ if }z_{ij\ell}=1\text{ and }\ell&gt;p_s\end{cases}\\
+%&amp;\qquad\text{for each }i\in\{1,\ldots,k\},\; j\in\{1,\ldots,n_i\},\; \ell\in\{1,\ldots,p_s+p_c\},\\
+%&amp;\qquad\text{with everything independent},\\
+Y_{j&#39;\ell}\;&amp;\sim G_\ell\\
+z_{ij\ell}\mid\beta_{i\ell}\;&amp;\sim \text{Bernoulli}(\beta_{i\ell})\\
+\beta_{i\ell}\;&amp;\sim\text{Beta}(a,b)\\
+\lambda_{ij}\;&amp;\sim\text{DiscreteUniform}(1,\ldots,N)
+\end{align*}\]</span>
+with everything independent of everything else. Since duplication is allowed within databases, any record can correspond to any latent individual. Hence, we can specify the prior the linkage structure by specifying it independently for each <span class="math inline">\(\lambda_{ij}\)</span> as shown above.</p>
+<p>We now give the joint posterior and full conditionals.
+For each <span class="math inline">\(v\in S_\ell\)</span>, define
+<span class="math display">\[
+h_\ell(v)=\left\{\sum_{w\in S_\ell}\exp\!\left[-c\,d(v,w)\right]\right\}^{-1},
+\]</span>
+i.e., <span class="math inline">\(h_\ell(v)\)</span> is the normalizing constant for the distribution
+<span class="math inline">\(F_\ell(v)\)</span>. We can compute <span class="math inline">\(h_\ell(v)\)</span> in advance for each possible
+<span class="math inline">\(v\in S_\ell\)</span>. After some simplification, the joint posterior of  becomes (where the full conditional distributions are derived in Appendix ):
+<span class="math display">\[\begin{align*}
+&amp;\pi(\pmb{\Lambda},\boldsymbol{Y},\boldsymbol{z},\boldsymbol{\beta}\mid \boldsymbol{X})\\
+%&amp;\propto
+%\prod_{i=1}^k\prod_{j=1}^{n_i}\left(
+%\left\{\mathop{\prod_{\ell=1}^{p_s+p_c}}_{z_{ij\ell}=0}I(X_{ij\ell}=Y_{\lambda_{ij}\ell})\right\}\left\{\mathop{\prod_{\ell=1}^{p_s+p_c}}_{z_{ij\ell}=1}\alpha_\ell(X_{ij\ell})\right\}\left\{\mathop{\prod_{\ell=1}^{p_s}}_{z_{ij\ell}=1}h_\ell(Y_{\lambda_{ij}\ell})\right\}\right.\\
+%&amp;\qquad\qquad\qquad\left.\times\exp\!\left[-c
+%\sum_{\ell=1}^{p_s}z_{ij\ell}\,
+%d(X_{ij\ell},Y_{\lambda_{ij}\ell})\right]
+%\right)\\
+%&amp;\qquad\times\left[\prod_{j&#39;=1}^N\prod_{\ell=1}^{p_s+p_c}\alpha_\ell(Y_{j&#39;\ell})\right]\left[\prod_{i=1}^k\prod_{\ell=1}^{p_s+p_c}\beta_{i\ell}^{\sum_{j=1}^{n_i}z_{ij\ell}+a-1}(1-\beta_{i\ell})^{n_i-\sum_{j=1}^{n_i}z_{ij\ell}+b-1}\right]\\
+&amp;\propto
+\prod_{i=1}^D\prod_{j=1}^{R_i}\left\{
+\left[\mathop{\prod_{\ell=1}^{p_s+p_c}}_{z_{ij\ell}=1}\alpha_\ell(X_{ij\ell})\right]\left[\mathop{\prod_{\ell=1}^{p_s}}_{z_{ij\ell}=1}h_\ell(Y_{\lambda_{ij}\ell})\right]\exp\!\left[-c
+\sum_{\ell=1}^{p_s}z_{ij\ell}\,
+d(X_{ij\ell},Y_{\lambda_{ij}\ell})\right]
+\right\}\\
+&amp;\qquad\times\left[\prod_{j&#39;=1}^N\prod_{\ell=1}^{p_s+p_c}\alpha_\ell(Y_{j&#39;\ell})\right]\left[\prod_{i=1}^D\prod_{\ell=1}^{p_s+p_c}\beta_{i\ell}^{\sum_{j=1}^{n_i}z_{ij\ell}+a-1}(1-\beta_{i\ell})^{n_i-\sum_{j=1}^{n_i}z_{ij\ell}+b-1}\right]\\
+&amp;\qquad\times I(X_{ij\ell}=Y_{\lambda_{ij}\ell}\text{ for all }i,j,\ell\text{ such that }z_{ij\ell}=0).
+\end{align*}\]</span></p>
+</div>
+<div id="similarity" class="section level2">
+<h2><span class="header-section-number">3.3</span> Attribute Similarity Measures</h2>
+<p>In this section, we review the attribute similarity measures defined by .</p>
+
+<div class="definition">
+<span id="def:attribute-sim-measure" class="definition"><strong>Definition 3.1  (Attribute similarity measure)  </strong></span>Let <span class="math inline">\(\mathcal{V}\)</span> be the domain of an attribute. An  on <span class="math inline">\(\mathcal{V}\)</span> is a function <span class="math inline">\(\mathtt{sim}: \mathcal{V}\times \mathcal{V}\to [0, s_\mathrm{max}]\)</span> that satisfies <span class="math inline">\(0 \leq s_\mathrm{max} &lt; \infty\)</span> and <span class="math inline">\(\mathtt{sim}(v,w) = \mathtt{sim}(w,v)\)</span> for all <span class="math inline">\(v, w \in \mathcal{V}\)</span>.
+</div>
+
+<p>These similarity measures is used to quantify the likelihood that some value <span class="math inline">\(v\)</span> in the empirical distribution gets chosen as a distortion of the true value <span class="math inline">\(w\)</span>.
+Although the parameterization of attribute similarity is different from the distance measure of ,  proved that the two parameterization is in fact equivalent, as long as the distance measure is bounded and symmetric. We refer the readers to  for detailed proofs of this result.</p>
+<p>During the process of inference, these similarities for the attributes may be expensive to evaluate on-the-fly, so  consider caching and truncation of attribute similarities. Only similarities for pairs of values that fall above a cut-off <span class="math inline">\(S_{cut;\ell}\)</span> are being stored. This is achieved through the following truncation transformation to the raw attribute similarity <span class="math inline">\(\mathtt{sim}_{\ell}(v,w)\)</span>:
+<span class="math display">\[\begin{equation}
+\underline{\mathtt{sim}}_{\ell}(v,w) = 
+  \max \left(0, \ \frac{\mathtt{sim}_{\ell}(v,w) - s_{\mathrm{cut};\ell}}
+    {1 - s_{\mathrm{cut};\ell}/s_{\mathrm{max};\ell}} \right).
+\end{equation}\]</span>
+Pairs of values not present in the cache have a truncated similarity of zero by default. We refer readers to Section 6.2 of the paper for discussions about this efficiency consideration.</p>
+<p>In this section we also discuss what the appropriate distance functions for the
+UNTC data would be like. Distances such as the Levenshtein distance would perform poorly because of situations like a dropped name or a re-ordered name would imply a large edit distance.
+Instead, we consider the Monge-Elkan distance of , a hybrid similarity measure, that seems more appropriate as it is insensitive to the variations above. We define Monge-Elkan distance as
+<span class="math display">\[\begin{equation}
+\texttt{sim}_{\ell}^{\text{M-E}}(A,B) = \frac{1}{|A|} \sum_{a \in A} \max_{b \in B} \texttt{sim}_{\ell}^{\prime}(a,b)
+\end{equation}\]</span>
+where <span class="math inline">\(A,B\)</span> are attributes with several words (e.g. JOSE TITO), <span class="math inline">\(a \in A, b\in B\)</span> are words in an attribute (e.g. JOSE), and <span class="math inline">\(\texttt{sim}^{\prime}\)</span> is a base similarity measure (such as the normalized edit similarity). With this formulation, we thus compare average similarity between all existing words in the two attributes, ignoring the ordering of them.
+We then define the asymmetric similarity function that we use for the string attributes in the UNTC data:
+<span class="math display">\[
+\texttt{sim}_{\ell}(A,B) = 
+\begin{cases}  0 &amp;\mbox{if } |A| &lt; |B| \\ 
+\texttt{sim}_{\ell}^{\text{M-E}}(A,B)  &amp; \text{otherwise.} \end{cases}
+\]</span>
+If attribute <span class="math inline">\(A\)</span> contains fewer words than attribute <span class="math inline">\(B\)</span>, then we immediately treat <span class="math inline">\(A\)</span> as not similar to <span class="math inline">\(B\)</span>. Otherwise we use the Monge-Elkan distance to measure their similarity.</p>
+</div>
+<div id="model" class="section level2">
+<h2><span class="header-section-number">3.4</span> Model Specification</h2>
+<p>We now describe the generative process of our proposed model.</p>
+
+<p>The model assumes a total of <span class="math inline">\(N\)</span> latent entities whose attributes have the true values.
+The value of attribute <span class="math inline">\(\ell\)</span> from the <span class="math inline">\(j&#39;\)</span> latent entity is to be drawn independently from the empirical distribution:
+<span class="math display">\[
+Y_{j&#39;\ell} \sim G_{\ell}.
+\]</span></p>
+
+<p>We draw a distortion probability for each attribute <span class="math inline">\(\ell\)</span> in database <span class="math inline">\(i\)</span> assuming
+<span class="math display">\[
+\beta_{i\ell} | a_{\ell}, b_{\ell} \sim Beta(a_{\ell}, b_{\ell}),
+\]</span>
+where <span class="math inline">\(a_{\ell}, b_{\ell}\)</span> are hyperparameters that we tune.</p>
+
+<p>We assume the records are generated one after another in an iterative fashion.
+Different from , we no longer do so by selecting a latent entity uniformly at random.
+Instead, we incorporate subjective, more flexible priors on the linkage structure <span class="math inline">\(\Lambda\)</span>. The generative process is described below.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Draw a latent entity assignment from a Bayesian nonparametric prior. Specifically, we consider the Pitman Yor Process prior and the Dirichlet Process prior (generalized as BNP Prior here):
+<span class="math display">\[
+\lambda_{ij} \sim \text{BNP Prior}(\vartheta, \sigma),
+\]</span>
+where <span class="math inline">\(\vartheta\)</span> and <span class="math inline">\(\sigma\)</span> are the hyperparameters of these two BNP priors. We provide details about the two priors in Section .</p></li>
+<li><p>For attribute <span class="math inline">\(\ell\)</span> of record <span class="math inline">\(j\)</span> in database <span class="math inline">\(i\)</span>, draw a distortion indicator <span class="math inline">\(z_{ij\ell}\)</span>:
+<span class="math display">\[
+z_{ij\ell} | \beta_{i\ell} \sim Bernoulli(\beta_{i\ell}).
+\]</span></p></li>
+<li><p>Draw the record value <span class="math inline">\(X_{ij\ell}\)</span> from a hit-or-miss model (different from the model of , we also incorporate attribute similarity measures to categorical fields):
+<span class="math display">\[
+X_{ij\ell} | \lambda_{ij},\,Y_{\lambda_{ij}\ell},\,z_{ij\ell} \sim (1 - z_{ij\ell}) \delta(Y_{\lambda_{ij}\ell}) + z_{ij\ell} \phi(X_{ij\ell} | Y_{\lambda_{ij}\ell}),
+\]</span>
+where
+<span class="math display">\[
+\phi(X_{ij\ell} = w| Y_{\lambda_{ij}\ell}) = \frac{\alpha_\ell(w)\,\exp\!\left[-c\,d(w,Y_{\lambda_{ij}\ell})\right]}{\sum_{w\in S_\ell}\alpha_\ell(w)\,\exp\!\left[-c\,d(w,Y_{\lambda_{ij}\ell})\right]}\propto\alpha_\ell(w)\,\exp\!\left[-c\,d(w,Y_{\lambda_{ij}\ell})\right]
+\]</span>
+for all attributes string-valued and categorical.
+If <span class="math inline">\(z_{ij\ell}=0\)</span> or no distortion, then the value of <span class="math inline">\(X_{ij\ell}\)</span> is exactly that of the corresponding latent entity.
+If <span class="math inline">\(z_{ij\ell}=1\)</span> or distortion, <span class="math inline">\(X_{ij\ell}\)</span> is then drawn from a weighted empirical distribution, with similarity measures.
+Equivalently, given the result of , we can write
+<span class="math display">\[
+\phi(X_{ij\ell} = w| Y_{\lambda_{ij}\ell}) = \frac{\alpha_\ell(w)\,\exp\!\left[\mathtt{sim}_{\ell}(w, Y_{\lambda_{ij}\ell})\right]}{\sum_{w\in S_\ell}\alpha_\ell(w)\,\exp\!\left[\mathtt{sim}_{\ell}(w, Y_{\lambda_{ij}\ell})\right]}\propto\alpha_\ell(w)\,\exp\!\left[\mathtt{sim}_{\ell}(w, Y_{\lambda_{ij}\ell})\right].
+\]</span></p></li>
+</ol>
+</div>
+<div id="bnp" class="section level2">
+<h2><span class="header-section-number">3.5</span> Entity Resolution with the Bayesian Nonparametric Priors</h2>
+<p>The empirical Bayesian approach (EB) of  uses a uniform prior to model the prior distribution of the linkage structure <span class="math inline">\(\boldsymbol{\Lambda}\)</span>.
+The uniform prior assumes that every legitimate configuration of the <span class="math inline">\(\lambda_{ij}\)</span> is equally likely a priori, and this implies a default prior on related quantities, such as the number of individuals in the data .
+Moreover, each record is assumed to be equally likely to correspond to any of the <span class="math inline">\(N\)</span> possible latent individuals a priori.
+While the choice of uniform prior is convenient and simplifies the computation of the posterior, there are several weaknesses that should be addressed.
+Firstly, the uniform prior is constructed under the assumption that the <span class="math inline">\(N\)</span> total records are randomly sampled with replacement from a population of <span class="math inline">\(N\)</span> total latent individuals.
+This turns out to be quite a strong assumption on the linkage structure. We assume that the total number of latent individuals has the same size as the sample.
+We also restrict the latent population size to be maximum <span class="math inline">\(N\)</span>, and not considering the case that the latent population size being greater than <span class="math inline">\(N\)</span>.
+Secondly,  showed that even though the uniform prior is often regarded as an non-informative prior, it is actually highly informative in the EB model because under certain conditions the data will not be able to overwhelm the prior, which defeats the purpose of developing a Bayesian model.</p>
+<p>For the above reasons, we consider more well-principled, subjective priors for the linkage prior.
+More specifically, we consider the Pitman-Yor prior (PYP).
+We first present notation that is used throughout the remainder of the paper and then derive the full conditional distributions. In terms of inference, we implement a standard Gibbs sampler.
+(We also consider the case of the Dirichlet process prior in our experiments given that this prior is a special case of the PYP).</p>
+
+<p>The PYP prior is adapted from (Pitman, 2006). Assume a total of <span class="math inline">\(D\)</span> databases. Assume that <span class="math inline">\(\lambda_{1,1}, ..., \lambda_{i,j-1}\)</span> are already classified into <span class="math inline">\(k_{i,j-1}\)</span> clusters identified by the population labels <span class="math inline">\(j&#39;_1, ..., j&#39;_{k_{i,j-1}}\)</span>. The clusters have sizes <span class="math inline">\(n_1, ..., n_{k_{i,j-1}}\)</span> respectively. In our context this means <span class="math inline">\(\lambda\)</span>’s that belong to the same cluster  the same latent entity. Let <span class="math inline">\(N_{i,j-1}\)</span> denote the total number of these records. We now consider the classification of <span class="math inline">\(\lambda_{ij}\)</span>, the label of the latent individual to which the <span class="math inline">\(j\)</span>th record in the <span class="math inline">\(i\)</span>th database corresponds. Recall that the PYP has three parameters, a  parameter <span class="math inline">\(\vartheta\)</span>, a  parameter <span class="math inline">\(\sigma\)</span>, and a base distribution <span class="math inline">\(H_0\)</span>.
+Under the PYP prior, <span class="math inline">\(\lambda_{ij}\)</span> will either identify a new cluster with probability
+<span class="math display">\[\begin{equation*}
+P(\lambda_{ij} \sim H_0 |  \lambda_{1,1}, ..., \lambda_{i, j-1}, \vartheta, \sigma, H_0) = \frac{k_{i,j-1}\sigma + \vartheta}{N_{i,j-1} + \vartheta},
+\end{equation*}\]</span>
+or identify with an existing cluster with probability
+<span class="math display">\[\begin{equation*}
+P(\lambda_{ij} = j&#39;_g \in \{j&#39;_1, ..., j&#39;_{k_{i,j-1}}\}|  \lambda_{1,1}, ..., \lambda_{i, j-1},  \vartheta, \sigma, H_0) = \frac{n_g - \sigma}{N_{i,j-1} + \vartheta},
+\end{equation*}\]</span>
+where the admissible values for the parameters are <span class="math inline">\(\sigma \in [0,1)\)</span> with <span class="math inline">\(\vartheta &gt; -\sigma\)</span> or <span class="math inline">\(\sigma &lt; 0\)</span> with <span class="math inline">\(\vartheta = m|\sigma|\)</span> for some positive integer <span class="math inline">\(m\)</span>. Together <span class="math inline">\(\vartheta\)</span> and <span class="math inline">\(\sigma\)</span> control the formation of new cluster. The discount parameter <span class="math inline">\(\sigma\)</span> reduces the probability of adding a new record into the existing cluster. The PYP prior yields power-law behavior in terms of cluster behavior when <span class="math inline">\(0 &lt; \sigma &lt; 1\)</span>. In addition, there is an obvious characteristic of the PYP prior, which is that the probability of a new record joining an existing cluster is proportional to the size of that cluster. So new records are more likely to join existing large clusters rather than a new cluster. This is often referred to as the “rich-get-richer” characteristic (Wallach, 2010).</p>
+<p>Note that under the PYP framework, we allow the latent population size to be greater than <span class="math inline">\(N\)</span>, which will be more applicable to real world scenarios. In addition, the results of this process are exchangeable, meaning the order in which the <span class="math inline">\(\lambda\)</span>’s identify with the clusters does not affect the probability of the final distribution, which is a desirable property of non-uniform priors.</p>
+<p>The above probabilities induce a prior on the set of all possible partitions of the <span class="math inline">\(N\)</span> records which is
+<span class="math display">\[\begin{equation*}
+P(Z(\lambda) = z) = \frac{(\vartheta+\sigma)_{k-1, \sigma}}{(\vartheta+1)_{N-1,1}} \prod^{k}_{g=1} (1-\sigma)_{n_g - 1, 1},
+\end{equation*}\]</span>
+where <span class="math inline">\(\{n_1, ...n_k \}\)</span> are the cluster sizes of a particular partition <span class="math inline">\(z\)</span>, and <span class="math inline">\(x_{r,s} = x(x+s)...(x+(r-1)s)\)</span> (Pitman, 2006). It can also be proved that under this prior setup, the expected value of the number of clusters in partition <span class="math inline">\(z\)</span>, <span class="math inline">\(k(z)\)</span>, is
+<span class="math display">\[\begin{equation} \label{eqn:1}
+E(k(z)) = \sum^{N}_{i=1} \frac{(\vartheta+\sigma)_{(i-1)\uparrow}} {(\vartheta+1)_{(i-1)\uparrow}} = \frac{\vartheta}{\sigma} \Bigg[ \frac{(\vartheta+\sigma)_{N \uparrow}}{(\vartheta)_{N \uparrow}} -1 \Bigg]
+\end{equation}\]</span>
+and the variance is
+<span class="math display">\[\begin{equation} \label{eqn:2}
+Var(k(z)) = \frac{\vartheta (\vartheta+\sigma)}{\sigma^2} \frac{(\vartheta+2\sigma)_{N\uparrow}}{(\vartheta)_{N\uparrow}} - \frac{\vartheta^2}{\sigma^2} \Bigg(\frac{(\vartheta+\sigma)_{N \uparrow}}{(\vartheta)_{N \uparrow}} \Bigg)^2 - \frac{\vartheta}{\sigma} \frac{(\vartheta+\sigma)_{N \uparrow}}{(\vartheta)_{N \uparrow}}
+\end{equation}\]</span>
+with <span class="math inline">\(x_{s\uparrow} = \Gamma(x+s) / \Gamma(x)\)</span>.</p>
+<p>We use the equations of expectation and variance for prior elicitation by selecting <span class="math inline">\(\vartheta\)</span> and <span class="math inline">\(\sigma\)</span> to have <span class="math inline">\(E(k(z))\)</span> equal to a rough prior guess of the number of clusters and <span class="math inline">\(Var(k(z))\)</span> equal to a specific amount of prior variability in the number of clusters.</p>
+
+<p>The Dirichlet Process (DP) is a special case of the Pitman-Yor Process when the discount parameter <span class="math inline">\(\sigma = 0\)</span>. Recall the definition of Dirichlet Process:
+<span class="math display">\[
+G \sim DP(\vartheta, H_0)
+\]</span>
+if for any partition <span class="math inline">\((A_1, ..., A_k)\)</span> of <span class="math inline">\(I{X}\)</span>:
+<span class="math display">\[
+\left( G(A_1), ..., G(A_k) \right) \sim \text{Dirichlet} \left( \vartheta H_0(A_1), ..., \vartheta H_0(A_k) \right)
+\]</span>
+where <span class="math inline">\(H_0\)</span> is the base distribution, and <span class="math inline">\(\vartheta\)</span> is the concentration parameter.
+Under a DP prior, similar to the PYP prior, the predictive probability of cluster membership of all records constructs a partition of these records sequentially.
+Under the DP prior, <span class="math inline">\(\lambda_{ij}\)</span> will either identify a new cluster with probability (Wallach, 2010).
+<span class="math display">\[\begin{equation*}
+P(\lambda_{ij} \sim H_0 |  \lambda_{1,1}, ..., \lambda_{i, j-1}, \vartheta, H_0) = \frac{\vartheta}{N_{i,j-1} + \vartheta},
+\end{equation*}\]</span>
+or identify with an existing cluster with probability
+<span class="math display">\[\begin{equation*}
+P(\lambda_{ij} = j&#39;_g \in \{j&#39;_1, ..., j&#39;_{k_{i,j-1}}\}|  \lambda_{1,1}, ..., \lambda_{i, j-1},  \vartheta, H_0) = \frac{n_g}{N_{i,j-1} + \vartheta}.
+\end{equation*}\]</span></p>
+</div>
+<div id="posterior" class="section level2">
+<h2><span class="header-section-number">3.6</span> Posterior Joint Distribution</h2>
+<p>For the context of our problem, we will assume that the data is missing at random (MAR), that is, <span class="math inline">\(\boldsymbol{O}\)</span> and <span class="math inline">\(\boldsymbol{X}\)</span> are statistically independent and that the distribution of <span class="math inline">\(\boldsymbol{O}\)</span> does not depend on the hyperparameters. Let <span class="math inline">\(\boldsymbol{X}^{obs} = \{X_{ijl} : O_{ijl} = 1\}\)</span> and <span class="math inline">\(\boldsymbol{X}^{miss} = \{X_{ijl} : O_{ijl} = 0\}\)</span>. Let <span class="math inline">\(\boldsymbol{\Theta}= \{a, b, \vartheta, \sigma\}\)</span>. We obtain the following expression by integrating out the missing attributes</p>
+<p><span class="math display" id="eq:3">\[\begin{equation*}
+\small
+\begin{split}
+&amp; p(\boldsymbol{\Lambda}, \boldsymbol{Y}, \boldsymbol{z}, \boldsymbol{\beta}, \boldsymbol{\Theta}, \boldsymbol{X}^{miss} | \boldsymbol{X}^{obs}, \boldsymbol{O}) \\
+&amp; \propto p(\boldsymbol{\beta}| \boldsymbol{\Theta}) \times p(\boldsymbol{z}| \boldsymbol{\beta}, \boldsymbol{\Theta}) \times p(\boldsymbol{\Lambda}| \boldsymbol{\Theta}) \times p(\boldsymbol{Y}) \\
+&amp; \quad \times p(\boldsymbol{X}^{miss} | \boldsymbol{\Lambda}, \boldsymbol{Y}, \boldsymbol{z}) \times p(\boldsymbol{X}^{obs} | \boldsymbol{\Lambda}, \boldsymbol{Y}, \boldsymbol{z}) \\
+&amp; \propto \left[ \prod\limits_i^{D} \prod\limits_{\ell}^{p_s+p_c} \beta_{i\ell}^{a-1} (1-\beta_{i\ell})^{b-1} \right] \times \left[ \prod\limits_i^{D} \prod\limits_j^{R_i} \prod\limits_{\ell}^{p_s+p_c}  \beta_{i \ell}^{z_{ij\ell}} (1-\beta_{i\ell})^{1-z_{ij\ell}} \right] \times \left[ \prod\limits_{j&#39;}^{N} \prod\limits_{\ell}^{p_s+p_c} \alpha_{\ell} (Y_{j&#39;\ell}) \right] \\
+&amp; \quad \times \left[ \prod\limits_{ij\ell \text{ s.t. } O_{ij\ell}=1} z_{ij\ell} \cdot \phi(X_{ij\ell} | Y_{\lambda_{ij}\ell}) + (1-z_{ij\ell}) I(X_{ij\ell} = Y_{\lambda_{ij}\ell}) \right] \\
+&amp; \quad \times \left[ \prod\limits_i^{D} \prod\limits_j^{R_i} I(\lambda_{ij} = \text{&quot;new&quot;}) \frac{k_{ij}\sigma + \vartheta}{N_{ij} + \vartheta} + I(\lambda_{ij} = j&#39;_g \in \{j&#39;_1, ..., j&#39;_{k_{i,j-1}}\}) \frac{n_g - \sigma}{N_{ij} + \vartheta} \right].
+\end{split}
+\tag{3.1}
+\end{equation*}\]</span></p>
+<p>We now derive the full conditional distribution of <span class="math inline">\(\pmb{\Lambda}\)</span> under the PYP prior:</p>
+<p><span class="math display">\[\begin{equation*}
+\small
+\begin{split}
+&amp; p(\pmb{\Lambda}| \boldsymbol{Y}, \boldsymbol{z}, \boldsymbol{\beta}, \boldsymbol{X}^{miss}, \boldsymbol{X}^{obs}) \\
+&amp; \propto p(\boldsymbol{\Lambda}| \boldsymbol{\Theta}) \times p(\boldsymbol{X}^{obs} | \boldsymbol{\Lambda}, \boldsymbol{Y}, \boldsymbol{z}) \\
+&amp; \propto \left[ \prod\limits_i^{D} \prod\limits_j^{R_i} I(\lambda_{ij} = \text{&quot;new&quot;}) \frac{k_{ij}\sigma + \vartheta}{N_{ij} + \vartheta} + I(\lambda_{ij} = j&#39;_g \in \{j&#39;_1, ..., j&#39;_{k_{i,j-1}}\}) \frac{n_g - \sigma}{N_{ij} + \vartheta} \right] \\
+&amp; \quad \times \left[ \prod\limits_{ij\ell \text{ s.t. } O_{ij\ell}=1} (1-z_{ij\ell}) \delta(Y_{\lambda_{ij}\ell})  + z_{ij\ell} \cdot \phi(X_{ij\ell} | Y_{\lambda_{ij}\ell}) \right].
+\end{split}
+\end{equation*}\]</span></p>
+<p>The full conditional distributions for other parameters remain the same as in  and we show them in Appendix . The full conditional distributions under
+the DP framework is only different from that under the PYP framework in the cluster
+assignment probabilities <span class="math inline">\(P(\lambda_{ij} \sim H_0 | \lambda_{1,1}, ..., \lambda_{i, j-1}, \vartheta, H_0)\)</span> and <span class="math inline">\(P(\lambda_{ij} = j&#39;_g \in \{j&#39;_1, ..., j&#39;_{k_{i,j-1}}\}| \lambda_{1,1}, ..., \lambda_{i, j-1}, \vartheta, H_0)\)</span>.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="priorworks.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="synthetic.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": [["thesis.pdf", "PDF"], ["thesis.epub", "EPUB"], ["thesis.docx", "Word"]],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

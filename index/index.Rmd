@@ -1,39 +1,120 @@
 ---
-author: 'Your R. Name'
-date: 'May 20xx'
+author: 'Bihan Zhuang'
+date: 'April 2019'
 institution: 'Duke University'
 division: 'Trinity College of Arts and Sciences'
-advisor: 'Advisor F. Name'
-#altadvisor: 'Your Other Advisor'
+advisor: 'Rebecca Steorts'
+# altadvisor: 'Your Other Advisor'
 # Delete line 7 if you only have one advisor
-committeememberone: 'Committeemember O. Name'
-committeemembertwo: 'Committeemember T. Name'
-dus: 'Dus X. Name'
+committeememberone: 'Amy Herring'
+committeemembertwo: 'Jerry Reiter'
+dus: 'Amy Herring'
 department: 'Department of Statistical Science'
 degree: 'Bachelor of Science in Statistical Science'
-title: 'My Final College Paper'
+title: 'Entity Resolution with an Application to the El Salvadoran Conflict'
 knit: "bookdown::render_book"
 site: bookdown::bookdown_site
-output: 
+output:
 #  thesisdowndss::thesis_pdf: default
-  thesisdowndss::thesis_gitbook: default
+thesisdowndss::thesis_gitbook: default
 #  thesisdowndss::thesis_word: default
 #  thesisdowndss::thesis_epub: default
-# If you are creating a PDF you'll need to write your preliminary content here or
-# use code similar to line 20 for the files.  If you are producing in a different
-# format than PDF, you can delete or ignore lines 20-31 in this YAML header.
-bibliography: bib/thesis.bib
-# Refer to your specific bibliography file in the line above.
+# If you'd rather include the preliminary content in files instead of inline
+# like below, use a command like that for the abstract above.  Note that a tab is 
+# needed on the line after the |.
 csl: csl/apa.csl
 # Download your specific csl file and refer to it in the line above.
 lot: true
 lof: true
-#space_between_paragraphs: true
+space_between_paragraphs: true
 # Delete the # at the beginning of the previous line if you'd like
 # to have a blank new line between each paragraph
-#header-includes:
-#- \usepackage{tikz}
+header-includes:
+- \usepackage{tikz}
+- \usepackage{xr-hyper}
+- \usepackage{hyperref}
+- \usepackage{amsmath}
+- \usepackage{graphicx}
+- \usepackage{enumerate}
+- \usepackage{natbib}
+- \usepackage{amsthm, amssymb}
+- \usepackage{booktabs}
+- \usepackage{algorithm}
+- \usepackage{algpseudocode}
+- \usepackage{multirow}
+- \usepackage{sectsty}
+- \usepackage{tabularx}
+- \usepackage{graphicx}
+- \usepackage{tikz}
+- \usepackage{bb, bbm}
+- \usepackage{xcolor}
+- \usepackage{microtype} 
+- \usepackage{import}
+- \usepackage{url}
+- \usepackage{soul, color}
+- \usepackage{titling}
+- \usetikzlibrary{arrows, snakes, backgrounds, patterns, matrix, shapes, fit, calc, shadows, plotmarks}
+- \usepackage{multibib}
+- \newcites{App}{References}
+
+- \renewcommand{\vec}{\bm}
+- \newcommand{\simfn}{\mathtt{sim}}
+- \newcommand{\truncsimfn}{\underline{\simfn}}
+- \newcommand{\partfn}{\mathtt{PartFn}}
+- \newcommand{\distfn}{\mathtt{dist}}
+- \newcommand{\valset}{\mathcal{V}}
+- \newcommand{\entset}{\mathcal{R}}
+- \newcommand{\partset}{\mathcal{E}}
+- \newcommand{\1}[1]{\mathbb{I}\!\left[#1\right]}
+- \newcommand{\euler}{\mathrm{e}}
+- \newcommand{\dblink}{\texttt{\upshape \lowercase{d-blink}}}
+- \newcommand{\blink}{\texttt{\upshape \lowercase{blink}}}
+- \newcommand{\secref}[1]{Section~\ref{#1}}
+- \newcommand{\myparagraph}[1]{\smallskip\textbf{#1}}
+- \newcommand{\eat}[1]{}
+
+- \renewcommand{\theequation}{S\arabic{equation}}
+- \renewcommand{\thefigure}{S\arabic{figure}}
+- \renewcommand{\bibnumfmt}[1]{[S#1]}
+- \renewcommand{\citenumfont}[1]{S#1}
+
+- \newcommand{\bpi}{\boldsymbol{\pi}}
+- \newcommand{\g}{\,|\,}
+- \newcommand{\clusters}{\boldsymbol{\kappa}}
+- \newcommand{\cluster}[1]{\kappa_{#1}}
+- \newcommand{\sizes}{\boldsymbol{\mu}}
+- \newcommand{\size}[1]{\mu_{#1}}
+
+- \newcommand{\edist}{\boldsymbol{\gamma}}
+- \newcommand{\shape}{\eta}
+- \newcommand{\rate}{s}
+- \newcommand{\betaA}{u}
+- \newcommand{\betaB}{v}
+
+- \newcommand{\boldbeta}{\boldsymbol{\beta}}
+- \newcommand{\boldLambda}{\pmb{\Lambda}}
+- \newcommand{\boldX}{\boldsymbol{X}}
+- \newcommand{\boldz}{\boldsymbol{z}}
+- \newcommand{\boldY}{\boldsymbol{Y}}
+- \newcommand{\bb}{\boldsymbol{\beta}}
+- \newcommand{\lam}{\boldsymbol{\Lambda}}
+- \newcommand{\by}{\boldsymbol{y}}
+- \newcommand{\bz}{\boldsymbol{z}}
+- \newcommand{\bX}{\boldsymbol{X}}
+- \newcommand{\bTheta}{\boldsymbol{\Theta}}
+- \newcommand{\bO}{\boldsymbol{O}}
+
+- \newcommand{\teq}{\!=\!}
+- \newcommand\iid{\mathrel{\stackrel{\makebox[0pt]{\mbox{\normalfont\tiny\textrm{iid}}}}{\sim}}}
+- \renewcommand{\liminf}{\operatornamewithlimits{\textrm{lim\,inf}}}
+
+- \newcommand{\rlfive}{\texttt{RLdata500}}
+- \newcommand{\rlten}{\texttt{RLdata10000}}
+- \newcommand{\eber}{\texttt{eber}}
 ---
+
+<!-- Custom commands -->
+
 
 ```{r include_packages, include = FALSE}
 # This chunk ensures that the thesisdowndss package is
@@ -45,12 +126,10 @@ library(servr)
 
 # Abstract {-}
 
-some abstract
+Entity resolution (record linkage or de-duplication) is the process of removing duplicate entities in large, noisy databases. Entity resolution is made even more difficult when unique identifiers are not present and many of the observed records are subject to missing values. Furthermore, entity resolution has tradeoffs regarding assumptions of the data generation process, error rates, and computational scalability that make it a difficult task for real applications. In this paper, we are motivated to study a real data set from El Salvador, where a Truth Commission formed by the United Nations in 1992 collected data on killings that occurred during the Salvadoran civil war (1980-1991). Due to the data collection process, victims can be duplicated, as they may have been reported by different relatives, friends, or grass roots teams working in the area. Our motivation is to be able (1) to build flexible and robust models that are computationally fast, (2) to better understand what types of models are well suited for conflict data, (3) and finally provide estimates and evaluations of the number of documented identifiable deaths for our motivating data set.
 
-## Acknowledgements {-}
+*Keywords*: record linkage, entity resolution, de-duplication, conflict data, Bayesian methods, El Salvador
 
-...
+# Acknowledgements {-}
+I would like to thank...
 
-## Dedication {-}
-
-...

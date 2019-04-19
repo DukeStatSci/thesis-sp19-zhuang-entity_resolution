@@ -1,0 +1,7 @@
+# Application To Synthetic Data {#synthetic}
+
+## Experiments {#synthetic-experiments}
+
+## Discussion of Application on RLdata500
+
+In this section, we briefly summarize our results on the RLdata500 data set. Under the best settings described in Section \@ref(synthetic-experiments), the PYP prior overall performs the best in terms of the precision (1), recall (0.98) with a 95 percent credible interval of [451, 457]. There is a tendency for the PYP to slightly overestimate the true value of number of unique records, whereas the DP and Uniform prior consistently underestimate the true value. All methods tend to have a balance between the recall and precision, which is a desired property in the field of entity resolution. In terms of computational complexity, the uniform prior is the slowest to mix, which is not unexpected given the fact that we are starting from a very unlikely configuration of the linkage structure. This results in the Gibbs sampler to need to be run for much longer compared to the PYP or DP prior. For example, if we have some idea about the true number of clusters of the existing population apriori, we are able to provide guidance regarding the two unknown parameters of the PYP prior. We are able to provide similar guidance for the DP prior. This in turn allows for faster mixing and a faster computational time of the Gibbs sampler. 
