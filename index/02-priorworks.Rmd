@@ -1,68 +1,22 @@
 # Current Approaches to Record Linkage {#priorworks}
 
-<!-- Required to number equations in HTML files -->
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  TeX: { equationNumbers: { autoNumber: "AMS" } }
-});
-</script>
+Many modern record linkage techniques can be viewed as an extension of the Fellegi-Sunter approach (FS), which computes pairwise probabilities of matching for all pairs of records using a likelihood ratio test \citep{fellegi_1969, newcombe_1959}.  While modern FS methods are used today, such implementations assume that only two databases can be linked and that there are no duplicates within each database \citep{gutman_2013, liseo_2011, larsen_2001, belin_1995, murray2016probabilistic}. Furthermore, such approaches are known to be quite sensitive to the choice of the threshold that the likelihood ratio test is based upon. In short, these assumptions are inadequate for many record linkage tasks. 
 
-## Math
+Bayesian methods have been recently utilized in record linkage due to their flexibility and exact error propagation; however, they have been limited primarily to two-database matching, issues with scalability to large databases, and model misspecification \citep{copas_1990, gutman_2013, liseo_2011,  Sadinle14, sadinle2016bayesian}.  These contributions, while valuable, do not easily generalize to multiple databases and to duplication within databases. 
 
-\TeX\ is the best way to typeset mathematics. Donald Knuth designed \TeX\ when he got frustrated at how long it was taking the typesetters to finish his book, which contained a lot of mathematics.  One nice feature of _R Markdown_ is its ability to read LaTeX code directly.
+The most relevant work to our proposed methodology is that of \cite{Sadinle14}, which deals with a special case of record linkage known as duplicate detection. Duplicate detection refers to removing duplicate entities within a data file (but not across and within data files). In \cite{Sadinle14}, the authors propose a duplicate detection approach borrowing approaches from \citep{fellegi_1969, newcombe_1959}, the Bayesian literature, and the blocking literature. Blocking (filtering or indexing) is a way of reducing down the entire space of records, such that one only must compare similar records. \cite{Sadinle14} first reduces down the space of all records using deterministic blocking rules. Next, the authors propose a Bayesian model based upon comparison data, which is an input from the blocking stage. One benefit of this is there is a computational cost from filtering records pairs, however, there is a tremendous drawback in that there is no way to propagate the uncertainty from the blocking mechanism in the duplicate detection step. The authors evaluate their proposed methodology for two municipalities, where ground truth is thought to be accurate. Further evaluations are performed in an entirely unsupervised fashion on the remaining municipalities. 
 
-If you are doing a thesis that will involve lots of math, you will want to read the following section.
-
-$$\sum_{j=1}^n (\delta\theta_j)^2 \leq {{\beta_i^2}\over{\delta_i^2 + \rho_i^2}}
-\left[ 2\rho_i^2 + {\delta_i^2\beta_i^2\over{\delta_i^2 + \rho_i^2}} \right] \equiv \omega_i^2
-$$
-
-From Informational Dynamics, we have the following (Dave Braden):
-
-After _n_ such encounters the posterior density for $\theta$ is
-
-$$
-\pi(\theta|X_1< y_1,\dots,X_n<y_n) \varpropto \pi(\theta) \prod_{i=1}^n\int_{-\infty}^{y_i}
-   \exp\left(-{(x-\theta)^2\over{2\sigma^2}}\right)\ dx
-$$
-
-Another equation:
-
-$$\det\left|\,\begin{matrix}%
-c_0&c_1\hfill&c_2\hfill&\ldots&c_n\hfill\cr
-c_1&c_2\hfill&c_3\hfill&\ldots&c_{n+1}\hfill\cr
-c_2&c_3\hfill&c_4\hfill&\ldots&c_{n+2}\hfill\cr
-\,\vdots\hfill&\,\vdots\hfill&
-  \,\vdots\hfill&&\,\vdots\hfill\cr
-c_n&c_{n+1}\hfill&c_{n+2}\hfill&\ldots&c_{2n}\hfill\cr
-\end{matrix}\right|>0$$
+In \cite{steorts??bayesian} a fully hierarchical-Bayesian approach to record linkage, using Dirichlet prior distributions over latent attributes and assuming a data distortion model. The authors derived an efficient
+hybrid (Metropolis-within-Gibbs) MCMC algorithm for fitting these models, SMERED.  SMERED 
+updates most of the latent variables and parameters using Gibbs sampling from conjugate conditional distributions.  
+It updates the bipartite graph using a
+split-merge step, following \cite{jain_2004}.  Thus, one has all the advantages of the Bayesian paradigm for both the latent entities and the linkage structure.  Similar bipartite graph structures have been considered in the two-database scenario \citep{liseo_2011,Fortinietal01, gutman_2013, Sadinle14, sadinle2016bayesian, Matsakis10,Larsen02,Larsen05, Larsen12}. The attributes of the latent entities, the number of latent entities, the edges linking records to latents, etc., all have posterior distributions, and it is easy to sample from these distributions for
+uncertainty quantification or error propagation.  More recently, \citep{steorts15entity}  extended these approaches to both categorical and noisy string data using an empirically motivated prior, \texttt{blink}, which is available on \texttt{CRAN}. The authors illustrated on real and simulated data that the EB method beat supervised methods (e.g., random forests, Bayesian Adaptive Regression Trees, logistic regression) when the training data is 10 percent (or less) of the total amount of data. While SMERED and the EB method work on moderately sized data sets, there are potential limitations with scaling to industrial-sized data sets. For a review on recent developments in Bayesian methods, see \cite{liseo_2013}. 
 
 
-Lapidus and Pindar, Numerical Solution of Partial Differential Equations in Science and
-Engineering.  Page 54
+## Overview of the Article {#overview}
+In this section, we provide an overview of the article. In this paper, we provide five contributions to the literature. First, we propose an extension to the \texttt{blink} model for end-to-end empirical Bayesian entity resolution \citep{steorts15entity}. Specifically, we provide to our knowledge the first use of subjective priors on the linkage structure for generalized entity resolution. We consider two non-parametric priors on the linkage structure, which are the Pitman-Yor Process prior and the Dirichlet Process prior. Second, we do not require any dimension reduction (such as blocking) to be applied to the data, which means that the only sources of error in our inferential methods comes from the data and the entity resolution task. Third, our extension using generalized entity resolution propagates the error of the entity resolution task exactly into our inferential task. Fourth, our method considers an application the synthetic data, where we can understand and evaluate our methodology rigorously. 
+Finally, our method looks at the case study to the UNTC data set from a fully unsupervised point of view.
 
-$$
-\int_t\left\{\sum_{j=1}^3 T_j \left({d\phi_j\over dt}+k\phi_j\right)-kT_e\right\}w_i(t)\ dt=0,
-   \qquad\quad i=1,2,3.
-$$
-
-L\&P  Galerkin method weighting functions.  Page 55
-
-$$
-\sum_{j=1}^3 T_j\int_0^1\left\{{d\phi_j\over dt} + k\phi_j\right\} \phi_i\ dt
-   = \int_{0}^1k\,T_e\phi_idt, \qquad i=1,2,3 $$
-
-Another L\&P (p145)
-
-$$
-\int_{-1}^1\!\int_{-1}^1\!\int_{-1}^1 f\big(\xi,\eta,\zeta\big)
-   = \sum_{k=1}^n\sum_{j=1}^n\sum_{i=1}^n w_i w_j w_k f\big( \xi,\eta,\zeta\big).
-$$
-
-Another L\&P (p126)
-
-$$
-\int_{A_e} (\,\cdot\,) dx dy = \int_{-1}^1\!\int_{-1}^1 (\,\cdot\,) \det[J] d\xi d\eta.
-$$
-
+In Section \@ref(methodology), we review prior methodology that is used in this paper, followed by a description of our proposed methodology. In Section \@ref(synthetic), we apply our proposed model to a synthetic data set. In Section \@ref(elsalvador), we test our proposed methodology on our motivational data set from El Salvadoran Conflict, and then provide a discussion regarding our proposed work and directions for future research. 
 
