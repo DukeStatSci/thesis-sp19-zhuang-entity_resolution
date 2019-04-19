@@ -79,8 +79,10 @@
 <li class="chapter" data-level="3.6" data-path="methodology.html"><a href="methodology.html#posterior"><i class="fa fa-check"></i><b>3.6</b> Posterior Joint Distribution</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="synthetic.html"><a href="synthetic.html"><i class="fa fa-check"></i><b>4</b> Application To Synthetic Data</a><ul>
-<li class="chapter" data-level="4.1" data-path="synthetic.html"><a href="synthetic.html#synthetic-experiments"><i class="fa fa-check"></i><b>4.1</b> Experiments</a></li>
-<li class="chapter" data-level="4.2" data-path="synthetic.html"><a href="synthetic.html#discussion-of-application-on-rldata500"><i class="fa fa-check"></i><b>4.2</b> Discussion of Application on RLdata500</a></li>
+<li class="chapter" data-level="4.1" data-path="synthetic.html"><a href="synthetic.html#parameter-setting"><i class="fa fa-check"></i><b>4.1</b> Parameter Settings</a></li>
+<li class="chapter" data-level="4.2" data-path="synthetic.html"><a href="synthetic.html#evaluation-metrics"><i class="fa fa-check"></i><b>4.2</b> Evaluation Metrics</a></li>
+<li class="chapter" data-level="4.3" data-path="synthetic.html"><a href="synthetic.html#rldata500-results"><i class="fa fa-check"></i><b>4.3</b> RLdata500 Results</a></li>
+<li class="chapter" data-level="4.4" data-path="synthetic.html"><a href="synthetic.html#discussion-of-application-on-rldata500"><i class="fa fa-check"></i><b>4.4</b> Discussion of Application on RLdata500</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="elsalvador.html"><a href="elsalvador.html"><i class="fa fa-check"></i><b>5</b> Application to El Salvodoran Conflict Data</a><ul>
 <li class="chapter" data-level="5.1" data-path="elsalvador.html"><a href="elsalvador.html#experiments"><i class="fa fa-check"></i><b>5.1</b> Experiments</a></li>
@@ -110,12 +112,111 @@
             <section class="normal" id="section-">
 <div id="synthetic" class="section level1">
 <h1><span class="header-section-number">Chapter 4</span> Application To Synthetic Data</h1>
-<div id="synthetic-experiments" class="section level2">
-<h2><span class="header-section-number">4.1</span> Experiments</h2>
+<p>In this section, we first apply our proposed methodology to synthetic data sets before applying our methodology in section <a href="elsalvador.html#elsalvador">5</a> to El Salvador. We describe the synthetic data, describe the evaluation metrics, and then provide our results on the synthetic data set. In our experiments on RLdata500, we compared our proposed methodology of the PYP and DP priors to the uniform prior of . We elaborate on the settings of each of these below.</p>
+<p>The RLdata500 synthetic data set is available in the RecordLinkage package in CRAN. It consists of 500 records, where 10 percent of the records are duplicates. That is, 450 individuals of this data set are unique entities. Features available in this data set are first and last German name and full date of birth. In addition, there are ground truth identifiers available for all records in this data set, so that we can easily ascertain the sensitivity and robustness of our proposed methodology.</p>
+<div id="parameter-setting" class="section level2">
+<h2><span class="header-section-number">4.1</span> Parameter Settings</h2>
+<p>We first provide all settings that are used in our experiments on RLdata500. Since we have ground truth in this particular application, we know that the true number of unique entities is 450. This helps us in choosing the hyper-parameters of the DP and the PYP distributions. As we explain below, for each prior, such as the PYP, we test several different hyper-parameter settings, and run the Gibbs sampler for each experiment.</p>
+<p><strong>PYP prior parameters.</strong>
+For example, we assume that the prior mean of the latent population is 450. Next, we choose three different prior variances of the latent population: 2840, 1610, and 584. For the PYP prior, we then solve for the parameters using () and () to arrive at three sets of PYP prior hyper-parameters <span class="math display">\[(\vartheta, \sigma): (0.4, 0.98), (2, 0.975), (10, 0.965).\]</span> Next, we chose three sets of prior hyper-parameters for the Beta distortion prior <span class="math display">\[(a, b): (0.5, 50), (1, 99), (3, 97).\]</span> These settings all satisfy the constraints on the prior, and correspond to prior mean of 0.001, 0.01, and 0.03 for the distortion probability. These settings were recommended in , and thus, this motivates our choice of these parameter settings here. Finally, we choose <span class="math inline">\(S_{max}\)</span> and <span class="math inline">\(S_{cut}\)</span> in the string similarity measure of first name and last name to be <span class="math inline">\((20, 10)\)</span> for the PYP prior setting. This means that we will treat similarity below 10 as zero.</p>
+<p><strong>DP prior parameters.</strong>
+Since DP is a special case of the PYP, we start with the hyperparameter settings described above for the PYP. We also perform a random search over the space of concentration parameter <span class="math inline">\(\vartheta\)</span>, as well as the string similarity measure.</p>
+<p><strong>Uniform prior parameters.</strong>
+For the uniform prior on the linkage structure, given the sensitivity analysis completed in , we utilize the best configuration for the parameters, which is <span class="math inline">\((a,b) = (1, 99)\)</span>. We refer the reader to this paper for a full review regarding the sensitivity analysis.
+We also perform a random search over the string similarity measure.</p>
+</div>
+<div id="evaluation-metrics" class="section level2">
+<h2><span class="header-section-number">4.2</span> Evaluation Metrics</h2>
+<p>In order to assess our model performance, we consider the following entity resolution metrics (a) precision, (b) recall, (c) posterior mean (estimated population size), (d) posterior standard error, and (e) runtime.</p>
+<p>The precision and recall are defined in the following way:
+<span class="math display">\[\text{Precision} = \text{TP} / (\text{TP} + \text{FP}) \; \text{and} \; \text{Recall} = \text{TP} / (\text{TP} + \text{FN}),\]</span>
+where TP = # of ground truth matching pairs that are also predicted matches, FP = # of ground truth non-matching pairs that are predicted matches, and FN = # of ground truth matching pairs that are predicted non-matches.</p>
+</div>
+<div id="rldata500-results" class="section level2">
+<h2><span class="header-section-number">4.3</span> RLdata500 Results</h2>
+<p>We now provide the experimental results of our proposed methodology using the PYP and DP priors, where we also make a comparison with the uniform prior of .</p>
+<p><strong>PYP prior on RLdata500.</strong>
+First, we consider the PYP prior on the linkage structure. The best parameter setting used was <span class="math inline">\((a,b)=(0.5, 50)\)</span>, <span class="math inline">\((S_{max}, S_{cut}) = (20, 10)\)</span>, <span class="math inline">\((\vartheta, \sigma) = (2, 0.975),\)</span> where best is determined based upon the evaluation metrics defined in section <a href="synthetic.html#evaluation-metrics">4.2</a>.</p>
+
+<div class="figure"><span id="fig:syn-trace-pyp"></span>
+<img src="thesis_files/figure-html/syn-trace-pyp-1.png" alt="PYP prior on RLdata500. Posterior diagnostic plots for our proposed method with PYP clustering prior with \((a,b)=(0.5, 50)\), \((S_{max}, S_{cut}) = (20, 10)\), and \((\vartheta, \sigma) = (2, 0.975)\). The left plot shows the trace plot of the latent ``population" size that are estimated for 30000 iterations of the Gibbs sampler. The right plot shows the posterior density of the number of distinct individuals in the sample for the RLdata500 data set under the proposed methodology, along with the posterior mean of 453.87 (black line), true value of 450 (red line) and 95% credible interval of [451, 457] (blue dashed line)." width="672" />
+<p class="caption">
+Figure 4.1: <strong>PYP prior on RLdata500</strong>. Posterior diagnostic plots for our proposed method with PYP clustering prior with <span class="math inline">\((a,b)=(0.5, 50)\)</span>, <span class="math inline">\((S_{max}, S_{cut}) = (20, 10)\)</span>, and <span class="math inline">\((\vartheta, \sigma) = (2, 0.975)\)</span>. The left plot shows the trace plot of the latent ``population" size that are estimated for 30000 iterations of the Gibbs sampler. The right plot shows the posterior density of the number of distinct individuals in the sample for the RLdata500 data set under the proposed methodology, along with the posterior mean of 453.87 (black line), true value of 450 (red line) and 95% credible interval of [451, 457] (blue dashed line).
+</p>
+</div>
+
+<div class="figure"><span id="fig:syn-distortion-pyp"></span>
+<img src="thesis_files/figure-html/syn-distortion-pyp-1.png" alt="PYP prior on RLdata500. Convergence diagnostic plot for the number of distortions in each attribute along the Markov Chain." width="672" />
+<p class="caption">
+Figure 4.2: <strong>PYP prior on RLdata500</strong>. Convergence diagnostic plot for the number of distortions in each attribute along the Markov Chain.
+</p>
+</div>
+
+<div class="figure"><span id="fig:rlpyp-results"></span>
+<img src="figure/rl-pyp-table.png" alt="PYP prior on RLdata500. Performance of proposed method (PYP) on RLdata500. 11,000 iterations of Gibbs sampler were executed." width="100%" />
+<p class="caption">
+Figure 4.3: <strong>PYP prior on RLdata500.</strong> Performance of proposed method (PYP) on RLdata500. 11,000 iterations of Gibbs sampler were executed.
+</p>
+</div>
+<p>Figure <a href="synthetic.html#fig:syn-trace-pyp">4.1</a> (right) illustrates the posterior density of population size under the model, with lines indicating predicted mean, true mean, and 95% credible interval. Table <a href="synthetic.html#fig:rlpyp-results">4.3</a> presents evaluation metrics for all our experiments under the PYP prior. As one can observe, under the PYP prior, when the prior expectation is set to the true number of clusters (450), the recall and precision remain both above 0.9, regardless of how we set the degree of the prior variability. Turning to inference, the posterior mean was typically close to the truth, although typically over-estimating the true value. The posterior errors remain quite small.</p>
+<p>Figure <a href="synthetic.html#fig:syn-trace-pyp">4.1</a> (left) illustrates the number of linked latent entities versus the number of Gibbs iterations (or rather a trace plot). From the trace plot we do not see any apparent issues with convergence after 30000 iterations of the Gibbs sampler. As an additional diagnostic, Figure <a href="synthetic.html#fig:syn-distortion-pyp">4.2</a> illustrates the number of distortions for each attribute along the Gibbs sampler, and we also do not see any apparent sign of non-convergence. We notice that the number of distortions remain below 10% in the categorical fields, birth year, month, and day. On the other hand, the number of distortions are higher for the string fields, which are between 20% and 30%. This is consistent with our prior belief that string fields are more prone to distortions than categorical fields.</p>
+<p><strong>DP prior on RLdata500.</strong>
+Second, we consider the DP prior on the linkage structure, which is a special case of the PYP where the discount parameter <span class="math inline">\(\sigma=0\)</span>. The best parameter setting used was <span class="math inline">\((a, b) = (1, 99)\)</span>, <span class="math inline">\((S_{max}, S_{cut}) = (30, 10)\)</span>, and <span class="math inline">\(\alpha = 12\)</span>.</p>
+
+<div class="figure"><span id="fig:syn-trace-dp"></span>
+<img src="thesis_files/figure-html/syn-trace-dp-1.png" alt="DP prior on RLdata500. Posterior diagnostic plots for our proposed method with DP clustering prior with \((a,b)=(1, 99)\), \((S_{max}, S_{cut}) = (30, 10)\), and \(\alpha = 12\). The left plot shows the trace plot of the latent ``population" size that are estimated for 100000 Gibbs samples for the RLdata500 data set. The right plot shows the posterior density of the number of distinct individuals in the sample for the RLdata500 data set under the proposed methodology, along with the posterior mean of 442.50(black line), true value of 450 (red line) and 95% credible interval of [438, 446] (blue dashed line)." width="672" />
+<p class="caption">
+Figure 4.4: <strong>DP prior on RLdata500</strong>. Posterior diagnostic plots for our proposed method with DP clustering prior with <span class="math inline">\((a,b)=(1, 99)\)</span>, <span class="math inline">\((S_{max}, S_{cut}) = (30, 10)\)</span>, and <span class="math inline">\(\alpha = 12\)</span>. The left plot shows the trace plot of the latent ``population" size that are estimated for 100000 Gibbs samples for the RLdata500 data set. The right plot shows the posterior density of the number of distinct individuals in the sample for the RLdata500 data set under the proposed methodology, along with the posterior mean of 442.50(black line), true value of 450 (red line) and 95% credible interval of [438, 446] (blue dashed line).
+</p>
+</div>
+
+<div class="figure"><span id="fig:syn-distortion-dp"></span>
+<img src="thesis_files/figure-html/syn-distortion-dp-1.png" alt="DP prior on RLdata500. Convergence diagnostic plot for the number of distortions in each attribute along the Markov Chain." width="672" />
+<p class="caption">
+Figure 4.5: <strong>DP prior on RLdata500</strong>. Convergence diagnostic plot for the number of distortions in each attribute along the Markov Chain.
+</p>
+</div>
+
+<div class="figure"><span id="fig:rldp-results"></span>
+<img src="figure/rl-dp-table.png" alt="DP prior on RLdata500. Performance of proposed method (DP) on RLdata500. 100,000 iterations of Gibbs sampler were executed." width="100%" />
+<p class="caption">
+Figure 4.6: <strong>DP prior on RLdata500.</strong> Performance of proposed method (DP) on RLdata500. 100,000 iterations of Gibbs sampler were executed.
+</p>
+</div>
+<p>Figure <a href="synthetic.html#fig:syn-trace-dp">4.4</a> shows the posterior density of the population size under the model, with lines indicating predicted mean, true mean, and 95% credible interval. Figure <a href="synthetic.html#fig:rldp-results">4.6</a> shows the evaluation metrics for all the experiments that we conducted under the DP prior. The model with DP prior was able to achieve perfect recall in all experiments, while the highest precision achieved was 0.909. The estimated posterior mean of the observed population was father from the truth compared to the PYP model. In addition, the DP prior consistently underestimates the observed population size, whereas the PYP overestimates the observed population size. In both cases, the posterior standard error are low.</p>
+<p>Turning to convergence diagnostics, we did not see any signs of a lack of convergence under the DP prior after 100000 iterations of the Gibbs sampler. Note that the DP prior took longer to converge than the PYP prior. Figure <a href="synthetic.html#fig:syn-distortion-dp">4.5</a> illustrates the number of distortions for each attribute versus the number of Gibbs iterations. We notice that the number of distortions remain below 10% in the categorical fields, birth year, month, and day. The number of distortions are still higher for the string fields, but under the DP prior, the numbers were reduced to between 15% and 22%, which is an improvement compared to under the PYP prior.</p>
+<p>Turning to computational speed, the runtimes varied depending on the maximum similarity allowed in the Levenshtein similarity function and the threshold for truncation. Higher thresholds, which correspond to the maximum similarity can result in memory storage, which results in faster sampling, and thus, a faster runtime. In addition, if the maximum similarity is also set to a low value, the the model allows for more distortion in the sampling process, which will lead to longer run times.</p>
+<p><strong>Uniform prior on RLdata500</strong>.
+Third, we consider the uniform prior on the linkage structure, as in . The best parameter setting used was <span class="math inline">\((a,b)=(1, 99)\)</span> and <span class="math inline">\((S_{max}, S_{cut}) = (30, 10)\)</span>.</p>
+
+<div class="figure"><span id="fig:syn-trace-uni"></span>
+<img src="thesis_files/figure-html/syn-trace-uni-1.png" alt="Uniform prior on RLdata500. Posterior diagnostic plots for our proposed method with uniform clustering prior with \((a,b)=(1, 99)\) and \((S_{max}, S_{cut}) = (30, 10)\). The left plot shows the trace plot of the latent ``population" size that are estimated for 90000 Gibbs samples for the RLdata500 data set. The right plot shows the posterior density of the number of distinct individuals in the sample for the RLdata500 data set under the proposed methodology, along with the posterior mean of 446.15 (black line), true value of 450 (red line) and 95% credible interval of [444, 448] (blue dashed line)." width="672" />
+<p class="caption">
+Figure 4.7: <strong>Uniform prior on RLdata500</strong>. Posterior diagnostic plots for our proposed method with uniform clustering prior with <span class="math inline">\((a,b)=(1, 99)\)</span> and <span class="math inline">\((S_{max}, S_{cut}) = (30, 10)\)</span>. The left plot shows the trace plot of the latent ``population" size that are estimated for 90000 Gibbs samples for the RLdata500 data set. The right plot shows the posterior density of the number of distinct individuals in the sample for the RLdata500 data set under the proposed methodology, along with the posterior mean of 446.15 (black line), true value of 450 (red line) and 95% credible interval of [444, 448] (blue dashed line).
+</p>
+</div>
+
+<div class="figure"><span id="fig:syn-distortion-uni"></span>
+<img src="thesis_files/figure-html/syn-distortion-uni-1.png" alt="Uniform prior on RLdata500. Convergence diagnostic plot for the number of distortions in each attribute along the Markov Chain." width="672" />
+<p class="caption">
+Figure 4.8: <strong>Uniform prior on RLdata500</strong>. Convergence diagnostic plot for the number of distortions in each attribute along the Markov Chain.
+</p>
+</div>
+
+<div class="figure"><span id="fig:rluni-results"></span>
+<img src="figure/rl-uni-table.png" alt="Uniform prior on RLdata500. Performance of proposed method (Uniform) on RLdata500. 90,000 iterations of Gibbs sampler were executed." width="100%" />
+<p class="caption">
+Figure 4.9: <strong>Uniform prior on RLdata500.</strong> Performance of proposed method (Uniform) on RLdata500. 90,000 iterations of Gibbs sampler were executed.
+</p>
+</div>
+<p>Figure <a href="synthetic.html#fig:syn-trace-uni">4.7</a> shows the posterior density of the population size under the model, with lines indicating predicted mean, true mean, and 95% credible interval. Figure <a href="synthetic.html#fig:rluni-results">4.9</a> shows the evaluation metrics for all the experiments that we conducted under the uniform prior.</p>
+<p>Turning to convergence diagnostics, we did not see any signs of a lack of convergence under the Uniform prior after 90,000 iterations of the Gibbs sampler. Notice that the Uniform prior also converged much slower than the PYP prior in the application to this data set.
+Figure <a href="synthetic.html#fig:syn-distortion-uni">4.8</a> shows the number of distortions for each attribute versus the Gibbs sampler. We notice that the number of distortions remain below 10% in the categorical fields, birth year, month, and day. The number of distortions are still higher for the string fields, but under the uniform prior, the numbers were even reduced from that of the DP prior. The model with the uniform prior was able to achieve high precision and recall in all experiments. The highest precision and recall achieved was 0.909 and 1 under the best configuration.
+The posterior mean population was relatively close to the truth, and the model consistently underestimated the true value. Posterior standard errors remained low. Runtime again varied depending on the maximum similarity allowed in the Levenshtein similarity function and the threshold for truncation.</p>
 </div>
 <div id="discussion-of-application-on-rldata500" class="section level2">
-<h2><span class="header-section-number">4.2</span> Discussion of Application on RLdata500</h2>
-<p>In this section, we briefly summarize our results on the RLdata500 data set. Under the best settings described in Section <a href="synthetic.html#synthetic-experiments">4.1</a>, the PYP prior overall performs the best in terms of the precision (1), recall (0.98) with a 95 percent credible interval of [451, 457]. There is a tendency for the PYP to slightly overestimate the true value of number of unique records, whereas the DP and Uniform prior consistently underestimate the true value. All methods tend to have a balance between the recall and precision, which is a desired property in the field of entity resolution. In terms of computational complexity, the uniform prior is the slowest to mix, which is not unexpected given the fact that we are starting from a very unlikely configuration of the linkage structure. This results in the Gibbs sampler to need to be run for much longer compared to the PYP or DP prior. For example, if we have some idea about the true number of clusters of the existing population apriori, we are able to provide guidance regarding the two unknown parameters of the PYP prior. We are able to provide similar guidance for the DP prior. This in turn allows for faster mixing and a faster computational time of the Gibbs sampler.</p>
+<h2><span class="header-section-number">4.4</span> Discussion of Application on RLdata500</h2>
+<p>In this section, we briefly summarize our results on the RLdata500 data set. Under the best settings described in Section <a href="synthetic.html#rldata500-results">4.3</a>, the PYP prior overall performs the best in terms of the precision (1), recall (0.98) with a 95 percent credible interval of [451, 457]. There is a tendency for the PYP to slightly overestimate the true value of number of unique records, whereas the DP and Uniform prior consistently underestimate the true value. All methods tend to have a balance between the recall and precision, which is a desired property in the field of entity resolution. In terms of computational complexity, the uniform prior is the slowest to mix, which is not unexpected given the fact that we are starting from a very unlikely configuration of the linkage structure. This results in the Gibbs sampler to need to be run for much longer compared to the PYP or DP prior. For example, if we have some idea about the true number of clusters of the existing population apriori, we are able to provide guidance regarding the two unknown parameters of the PYP prior. We are able to provide similar guidance for the DP prior. This in turn allows for faster mixing and a faster computational time of the Gibbs sampler.</p>
 
 </div>
 </div>

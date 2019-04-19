@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>A Derivation of full conditional distributions | Entity Resolution with an Application to the El Salvadoran Conflict</title>
+  <meta name="description" content="A Derivation of full conditional distributions | Entity Resolution with an Application to the El Salvadoran Conflict">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="A Derivation of full conditional distributions | Entity Resolution with an Application to the El Salvadoran Conflict" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="A Derivation of full conditional distributions | Entity Resolution with an Application to the El Salvadoran Conflict" />
+  
+  
+  
+
+<meta name="author" content="Bihan Zhuang">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="conclusion.html">
+<link rel="next" href="the-second-appendix-for-fun.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Abstract</a></li>
+<li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#UNTC"><i class="fa fa-check"></i><b>1.1</b> The United Nations Truth Commission for El Salvador</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="priorworks.html"><a href="priorworks.html"><i class="fa fa-check"></i><b>2</b> Current Approaches to Record Linkage</a><ul>
+<li class="chapter" data-level="2.1" data-path="priorworks.html"><a href="priorworks.html#overview"><i class="fa fa-check"></i><b>2.1</b> Overview of the Article</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="methodology.html"><a href="methodology.html"><i class="fa fa-check"></i><b>3</b> Methodology</a><ul>
+<li class="chapter" data-level="3.1" data-path="methodology.html"><a href="methodology.html#notation"><i class="fa fa-check"></i><b>3.1</b> Notation and Assumptions</a></li>
+<li class="chapter" data-level="3.2" data-path="methodology.html"><a href="methodology.html#foundation"><i class="fa fa-check"></i><b>3.2</b> Background on Empirical Bayesian Entity Resolution</a></li>
+<li class="chapter" data-level="3.3" data-path="methodology.html"><a href="methodology.html#similarity"><i class="fa fa-check"></i><b>3.3</b> Attribute Similarity Measures</a></li>
+<li class="chapter" data-level="3.4" data-path="methodology.html"><a href="methodology.html#model"><i class="fa fa-check"></i><b>3.4</b> Model Specification</a></li>
+<li class="chapter" data-level="3.5" data-path="methodology.html"><a href="methodology.html#bnp"><i class="fa fa-check"></i><b>3.5</b> Entity Resolution with the Bayesian Nonparametric Priors</a></li>
+<li class="chapter" data-level="3.6" data-path="methodology.html"><a href="methodology.html#posterior"><i class="fa fa-check"></i><b>3.6</b> Posterior Joint Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="synthetic.html"><a href="synthetic.html"><i class="fa fa-check"></i><b>4</b> Application To Synthetic Data</a><ul>
+<li class="chapter" data-level="4.1" data-path="synthetic.html"><a href="synthetic.html#parameter-setting"><i class="fa fa-check"></i><b>4.1</b> Parameter Settings</a></li>
+<li class="chapter" data-level="4.2" data-path="synthetic.html"><a href="synthetic.html#evaluation-metrics"><i class="fa fa-check"></i><b>4.2</b> Evaluation Metrics</a></li>
+<li class="chapter" data-level="4.3" data-path="synthetic.html"><a href="synthetic.html#rldata500-results"><i class="fa fa-check"></i><b>4.3</b> RLdata500 Results</a></li>
+<li class="chapter" data-level="4.4" data-path="synthetic.html"><a href="synthetic.html#discussion-of-application-on-rldata500"><i class="fa fa-check"></i><b>4.4</b> Discussion of Application on RLdata500</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="elsalvador.html"><a href="elsalvador.html"><i class="fa fa-check"></i><b>5</b> Application to El Salvodoran Conflict Data</a><ul>
+<li class="chapter" data-level="5.1" data-path="elsalvador.html"><a href="elsalvador.html#experiments"><i class="fa fa-check"></i><b>5.1</b> Experiments</a></li>
+<li class="chapter" data-level="5.2" data-path="elsalvador.html"><a href="elsalvador.html#discussion-of-application-on-untc-data"><i class="fa fa-check"></i><b>5.2</b> Discussion of Application on UNTC data</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>6</b> Conclusion</a></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="appendix-A.html"><a href="appendix-A.html"><i class="fa fa-check"></i><b>A</b> Derivation of full conditional distributions</a></li>
+<li class="chapter" data-level="B" data-path="the-second-appendix-for-fun.html"><a href="the-second-appendix-for-fun.html"><i class="fa fa-check"></i><b>B</b> The Second Appendix, for Fun</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Entity Resolution with an Application to the El Salvadoran Conflict</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="appendix-A" class="section level1">
+<h1><span class="header-section-number">A</span> Derivation of full conditional distributions</h1>
+<p>It is straightforward to show that
+<span class="math display">\[
+\pi(\boldsymbol{\beta}\mid \boldsymbol{\Lambda}, \boldsymbol{y}, \boldsymbol{z}, \boldsymbol{X}) \propto 
+\prod_{i=1}^k\prod_{\ell=1}^{p_s + p_\ell} \boldsymbol{\beta}_{i\ell}^{\sum_{j=1}^{n_i} z_{ij\ell} + a -1} (1-  \boldsymbol{\beta}_{i\ell})^{n_i -\sum_{j=1} \boldsymbol{z}_{ij\ell} + b -1}, 
+\]</span>
+which means
+<span class="math display">\[
+\boldsymbol{\beta}_{i\ell} \mid \pmb{\Lambda}, \boldsymbol{y}, \boldsymbol{z}, \boldsymbol{X}\stackrel{iid}{\sim} \text{Beta}(\sum_{j=1}^{n_i} z_{ij\ell} + a, n_i - \sum_{j=1}^{n_i} z_{ij\ell} + b).
+\]</span></p>
+Consider the distribution of <span class="math inline">\(\boldsymbol{z}\mid \boldsymbol{\Lambda}, \boldsymbol{y}, \boldsymbol{\beta}, \boldsymbol{X}.\)</span> We find that
+
+<p>Remark: <span class="math inline">\(\boldsymbol{z}_{ij\ell}\)</span> are all independent conditional on <span class="math inline">\(\boldsymbol{\Lambda}, \boldsymbol{y}, \boldsymbol{\beta}, \boldsymbol{X}.\)</span></p>
+<p>We now turn to the conditional distribution of <span class="math inline">\(\boldsymbol{y}\mid \boldsymbol{\Lambda}, \boldsymbol{y}, \boldsymbol{\beta}, \boldsymbol{X}.\)</span> First, note that each <span class="math inline">\(\boldsymbol{y}_{j\prime \ell}\)</span> takes values in the set <span class="math inline">\(S_\ell,\)</span> which consists of all values for the <span class="math inline">\(\ell\)</span>th field that appear anywhere in the data. Then the distribution of
+<span class="math inline">\(\boldsymbol{y}_{j\prime \ell} \mid \boldsymbol{\Lambda}, \boldsymbol{y}, \boldsymbol{\beta}, \boldsymbol{X}\)</span> takes the form
+<span class="math inline">\(P(\boldsymbol{y}_{j\prime \ell} = w \mid \boldsymbol{\Lambda}, \boldsymbol{y}, \boldsymbol{\beta}, \boldsymbol{X}) = A_\phi \phi_w\)</span> for all <span class="math inline">\(w \in S_\ell,\)</span> where <span class="math inline">\(A_\phi = \left (\sum_{w \in S_\ell} \phi_w \right) ^{-1}.\)</span></p>
+<p>Let <span class="math inline">\(R_j^\prime = \{(i,j) : \lambda_{ij} = j^\prime \}\)</span>
+%denote
+be the set of all records that correspond to individual $ j^.$ Then if <span class="math inline">\(\ell \leq p_s,\)</span></p>
+<p><span class="math display">\[\begin{align*}
+\phi_w = \mathop{ \prod_{(i,j) \in R_j^\prime} }_{z_{ij\ell}=1} h_\ell(w) \exp\left\{
+-c 
+\mathop{\sum_{(i,j) \in R_j^\prime}}_{z_{ij\ell}=1}
+d(X_{ij\ell},w)
+\right\}
+\alpha_\ell(w) \times
+\mathop{ \prod_{(i,j) \in R_j^\prime} }_{z_{ij\ell}=0} I(X_{ij\ell} = w).
+\end{align*}\]</span></p>
+<p>Simplifying,</p>
+<p><span class="math display">\[
+\phi_w = 
+\begin{cases}
+\displaystyle
+\alpha_\ell(w)  \mathop{ \prod_{(i,j) \in R_j^\prime} }_{z_{ij\ell}=1} 
+\left\{
+ h_\ell(w)
+\;  \exp\left\{
+-c \;
+d(X_{ij\ell},w)
+\right\} 
+\right\}
+\text{if} \; X_{ij\ell} = w \;  \forall (i,j) \in R_j^\prime  \owns  z_{ij\ell} = 0\\
+0 \; \text{otherwise.}
+\end{cases}
+\]</span></p>
+<p>Hence, if <span class="math inline">\(\ell \leq p_s,\)</span> then <span class="math inline">\(Y_{j^\prime \ell} \mid \boldsymbol{\Lambda}, \boldsymbol{z}, \boldsymbol{\beta}, \boldsymbol{X}\)</span> has the distribution
+<span class="math display">\[\begin{align*}
+P(Y_{j^\prime \ell} = w \mid \boldsymbol{\Lambda}, \boldsymbol{z}, \boldsymbol{\beta}, \boldsymbol{X}) = \frac{
+\alpha_\ell(w)  \mathop{ \prod_{(i,j) \in R_j^\prime} }_{z_{ij\ell}=1} 
+\left\{
+ h_\ell(w)
+\;  \exp\left\{
+-c \;
+d(X_{ij\ell},w)
+\right\} 
+\right\}
+}
+{
+\sum_{w \in S_\ell} \left(
+\alpha_\ell(w)  \mathop{ \prod_{(i,j) \in R_j^\prime} }_{z_{ij\ell}=1} 
+\left\{
+ h_\ell(w)
+\;  \exp\left\{
+-c \;
+d(X_{ij\ell},w)
+\right\} 
+\right\}
+\right)
+}.
+\end{align*}\]</span></p>
+<p>If instead, <span class="math inline">\(\ell &gt; p_c,\)</span> then we find that
+%
+$
+P(Y_{j^} = w , , , ) =<em>(w)
+(</em>{w S_} _(w))^{-1}.
+$</p>
+<p>Regarding, the linkage structure <span class="math inline">\(\boldsymbol{\Lambda},\)</span> its full conditional is as follows:
+%
+$
+P(_{ij} = v , , , ) = 0
+$ if there exists <span class="math inline">\(\ell\)</span> such that <span class="math inline">\(z_{ij\ell} = 0\)</span> and <span class="math inline">\(X_{ij\ell} \neq Y_{v\ell}.\)</span> Otherwise,
+%
+<span class="math display">\[ P(\lambda_{ij} = v \mid \boldsymbol{y}, \boldsymbol{z}, \boldsymbol{\beta}, \boldsymbol{X}) \propto 
+ \mathop{ \prod_{\ell=1}^{p_s}}_{z_{ij\ell }= 1}
+ \left\{
+ h_\ell(Y_{v \ell} )
+ \exp\left\{
+-c \;
+d(X_{ij\ell},Y_{v \ell} )
+\right\} 
+ \right\}.
+ \]</span></p>
+<p>Define <span class="math inline">\(\Omega_{ij} = \{j^\prime : X_{ij\ell} = Y_{j^\prime \ell} \; \forall \; \ell \owns z_{ij\ell} = 0\}.\)</span> Then this implies
+%
+<span class="math display">\[\begin{align*}
+P(\lambda_{ij} = v \mid \boldsymbol{y}, \boldsymbol{z}, \boldsymbol{\beta}, \boldsymbol{X}) =
+\frac{
+\displaystyle
+ \mathop{ \prod_{\ell=1}^{p_s}}_{z_{ij\ell }= 1}
+ \left\{
+ h_\ell(Y_{v \ell} )
+ \exp\left\{
+-c \;
+d(X_{ij\ell},Y_{v \ell} )
+\right\} 
+ \right\}
+}
+{
+\sum_{v^\prime \in \Omega_{ij}}
+\left\{
+\displaystyle
+ \mathop{ \prod_{\ell=1}^{p_s}}_{z_{ij\ell }= 1}
+ \left\{
+ h_\ell(Y_{v \ell} )
+ \exp\left\{
+-c \;
+d(X_{ij\ell},Y_{v \ell} )
+\right\} 
+ \right\}
+\right\}
+}.
+\end{align*}\]</span></p>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="conclusion.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="the-second-appendix-for-fun.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": [["thesis.pdf", "PDF"], ["thesis.epub", "EPUB"], ["thesis.docx", "Word"]],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
