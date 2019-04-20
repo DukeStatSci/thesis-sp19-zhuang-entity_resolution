@@ -137,7 +137,6 @@ d(X_{ij\ell},Y_{v \ell} )
  $$
  
 Define $\Omega_{ij} = \{j^\prime : X_{ij\ell} =  Y_{j^\prime \ell} \; \forall \; \ell \owns z_{ij\ell} = 0\}.$ Then this implies 
-%
 \begin{align*}
 P(\lambda_{ij} = v \mid \by, \bz, \bb, \bX) =
 \frac{
