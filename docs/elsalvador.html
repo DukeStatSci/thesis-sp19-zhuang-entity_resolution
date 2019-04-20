@@ -85,8 +85,9 @@
 <li class="chapter" data-level="4.4" data-path="synthetic.html"><a href="synthetic.html#discussion-of-application-on-rldata500"><i class="fa fa-check"></i><b>4.4</b> Discussion of Application on RLdata500</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="elsalvador.html"><a href="elsalvador.html"><i class="fa fa-check"></i><b>5</b> Application to El Salvodoran Conflict Data</a><ul>
-<li class="chapter" data-level="5.1" data-path="elsalvador.html"><a href="elsalvador.html#experiments"><i class="fa fa-check"></i><b>5.1</b> Experiments</a></li>
-<li class="chapter" data-level="5.2" data-path="elsalvador.html"><a href="elsalvador.html#discussion-of-application-on-untc-data"><i class="fa fa-check"></i><b>5.2</b> Discussion of Application on UNTC data</a></li>
+<li class="chapter" data-level="5.1" data-path="elsalvador.html"><a href="elsalvador.html#parameter-settings-sv"><i class="fa fa-check"></i><b>5.1</b> Parameter Settings</a></li>
+<li class="chapter" data-level="5.2" data-path="elsalvador.html"><a href="elsalvador.html#untc-results"><i class="fa fa-check"></i><b>5.2</b> UNTC Results</a></li>
+<li class="chapter" data-level="5.3" data-path="elsalvador.html"><a href="elsalvador.html#sv-discussion"><i class="fa fa-check"></i><b>5.3</b> Discussion of Application on UNTC data</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>6</b> Conclusion</a></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -112,11 +113,318 @@
             <section class="normal" id="section-">
 <div id="elsalvador" class="section level1">
 <h1><span class="header-section-number">Chapter 5</span> Application to El Salvodoran Conflict Data</h1>
-<div id="experiments" class="section level2">
-<h2><span class="header-section-number">5.1</span> Experiments</h2>
+<p>In this section, we consider a case study to entity resolution by applying our proposed
+methods to the UNTC data set from El Salvadorian Civil War, introduced in Section
+<a href="introduction.html#UNTC">1.1</a>. The evaluation metrics in this section are the same as in Section <a href="synthetic.html#evaluation-metrics">4.2</a>.</p>
+<div id="parameter-settings-sv" class="section level2">
+<h2><span class="header-section-number">5.1</span> Parameter Settings</h2>
+<p>We first provide all settings that are used in our experiments on the UNTC data set.
+There is no ground truth information available for this data set except for two departments,
+namely 1 and 7. Hand matching was done by <span class="citation">(Sadinle, 2014)</span> for both of these departments,
+and we refer to the details of this paper regarding how the hand matching was performed.
+Given that we do not know the true cluster size of departments 1 or 7, we will assume
+that the true cluster sizes are close to the posterior mean of both departments 1 and 7
+reported in <span class="citation">(Sadinle, 2014)</span>, which is 680 unique clusters in total. We investigate intensively
+the hyperparameters of prior distortion, the concentration and discount parameters of the linkage structure, as well as the attribute similarity measures using the prior knowledge and random search.
+We also perform random search in a “coordinate” descent fashion along each of the attributes
+due to the large space of similarity measures of each attribute.</p>
 </div>
-<div id="discussion-of-application-on-untc-data" class="section level2">
-<h2><span class="header-section-number">5.2</span> Discussion of Application on UNTC data</h2>
+<div id="untc-results" class="section level2">
+<h2><span class="header-section-number">5.2</span> UNTC Results</h2>
+<p>In this section, we provide the experimental results of our proposed methodology
+using the PYP and DP priors and the Uniform prior of <span class="citation">(Steorts, 2015)</span> on
+the UNTC data set.</p>
+<p><strong>PYP Prior on UNTC</strong>.
+First, we consider the PYP prior on the linkage structure. The best parameter setting
+used was <span class="math inline">\((a,b)=(1, 99)\)</span>, <span class="math inline">\((\vartheta, \sigma) = (4.6017, 0.9875)\)</span> and the similarity
+configuration for each attribute is listed in Table <a href="elsalvador.html#tab:sv-pyp-best">5.1</a>.</p>
+<table style="width:54%;">
+<caption><span id="tab:sv-pyp-best">Table 5.1: </span> <strong>PYP Prior on UNTC</strong>. Best configuration of attribute similarity measures for UNTC data set. Recall that similarities below <span class="math inline">\(S_{cut}\)</span> are effectively treated as zero (truncation) in order to speed up the sampling.</caption>
+<colgroup>
+<col width="16%" />
+<col width="20%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Field</th>
+<th align="center"><span class="math inline">\(S_{max}\)</span></th>
+<th align="center"><span class="math inline">\(S_{cut}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">firstname</td>
+<td align="center">40</td>
+<td align="center">28</td>
+</tr>
+<tr class="even">
+<td align="center">lastname</td>
+<td align="center">40</td>
+<td align="center">28</td>
+</tr>
+<tr class="odd">
+<td align="center">dept</td>
+<td align="center">20</td>
+<td align="center">10</td>
+</tr>
+<tr class="even">
+<td align="center">muni</td>
+<td align="center">20</td>
+<td align="center">10</td>
+</tr>
+<tr class="odd">
+<td align="center">day</td>
+<td align="center">10</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="center">month</td>
+<td align="center">10</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="center">year</td>
+<td align="center">20</td>
+<td align="center">10</td>
+</tr>
+</tbody>
+</table>
+
+<div class="figure"><span id="fig:sv-trace-pyp"></span>
+<img src="thesis_files/figure-html/sv-trace-pyp-1.png" alt="PYP Prior on UNTC. Posterior diagnostic plots for our proposed method with PYP clustering prior with \((a,b)=(1, 99)\), \((\vartheta, \sigma) = (4.6017, 0.9875)\), and similarity configuration for each attribute specified in Table 5.1. The left plot shows the trace plot of the latent “population” size that are estimated for 20000 Gibbs samples for the UNTC data set. The right plot shows the posterior density of the number of distinct individuals in the sample for the UNTC data set under the proposed methodology, along with the posterior mean of 725.02 (black line), “true” value of 680 (red line) and 95% credible interval of [723, 727] (blue dashed line)." width="672" />
+<p class="caption">
+Figure 5.1: <strong>PYP Prior on UNTC</strong>. Posterior diagnostic plots for our proposed method with PYP clustering prior with <span class="math inline">\((a,b)=(1, 99)\)</span>, <span class="math inline">\((\vartheta, \sigma) = (4.6017, 0.9875)\)</span>, and similarity configuration for each attribute specified in Table <a href="elsalvador.html#tab:sv-pyp-best">5.1</a>. The left plot shows the trace plot of the latent “population” size that are estimated for 20000 Gibbs samples for the UNTC data set. The right plot shows the posterior density of the number of distinct individuals in the sample for the UNTC data set under the proposed methodology, along with the posterior mean of 725.02 (black line), “true” value of 680 (red line) and 95% credible interval of [723, 727] (blue dashed line).
+</p>
+</div>
+
+<div class="figure"><span id="fig:sv-distortion-pyp"></span>
+<img src="thesis_files/figure-html/sv-distortion-pyp-1.png" alt="PYP Prior on UNTC. Convergence diagnostic plot for the number of distortions in each attribute versus the number of Gibbs iterations." width="672" />
+<p class="caption">
+Figure 5.2: <strong>PYP Prior on UNTC</strong>. Convergence diagnostic plot for the number of distortions in each attribute versus the number of Gibbs iterations.
+</p>
+</div>
+
+<div class="figure"><span id="fig:svpyp-results"></span>
+<img src="figure/sv-pyp-table.png" alt="PYP Prior on UNTC. Performance of proposed method (PYP) on UNTC. 20000 iterations of Gibbs sampler were executed." width="100%" />
+<p class="caption">
+Figure 5.3: <strong>PYP Prior on UNTC</strong>. Performance of proposed method (PYP) on UNTC. 20000 iterations of Gibbs sampler were executed.
+</p>
+</div>
+<p>Figure <a href="elsalvador.html#fig:sv-trace-pyp">5.1</a> shows the posterior density of population size under the model, with lines indicating
+predicted mean, true mean, and 95% credible interval. In addition, we provide
+evaluation metrics for all the experiments we conducted in Figure <a href="elsalvador.html#fig:svpyp-results">5.3</a>.
+The model with PYP prior was able to achieve very high precision in all experiments,
+however the highest recall achieved was around 0.16. The posterior mean of the
+observed population was quite far from the truth. Under the PYP, we see that the
+model consistently overestimates the true value. Posterior standard error was low.</p>
+<p>From the trace plot we assess the convergence of our Gibbs sampler under the PYP prior.
+We do not see any apparent sign for non-convergence after 20000 iterations.
+Figure <a href="elsalvador.html#fig:sv-distortion-pyp">5.2</a> shows the number of distortions for each attribute along
+the Markov chain, and we also do not see any apparent sign of non-convergence.
+We notice that the number of distortions remain below 5% in the department field,
+is about 15-20% for firstname, lastname and month fields, and is about 30-40% for
+the municipality, day and year fields. This is very different from our findings on the
+RLdata500 data set, where in general we observed low distortion in the
+categorical fields and higher distortion in the string fields. Real world data sets,
+such as the UNTC data set, are often much more noisy, with higher degree of
+distortion on average.</p>
+<p>Turning to computational speed, we found that our model with PYP prior was still able
+to converge in a relatively short amount of time, even with increased data size and
+more complex attributes. Runtime also varied with the changing concentration and
+discount hyper-parameters, but the difference is not too significant.</p>
+<p><strong>DP Prior on UNTC</strong>.
+Secondly, we consider the DP prior on the linkage structure, which is a special case
+of the PYP when the discount parameter <span class="math inline">\(\sigma=0\)</span>. The best parameter setting
+used was <span class="math inline">\((a, b) = (1, 99)\)</span>, <span class="math inline">\(\vartheta = 2\)</span> and the similarity configuration for each
+attribute listed in Table <a href="elsalvador.html#tab:sv-dp-best">5.2</a>.</p>
+<table style="width:54%;">
+<caption><span id="tab:sv-dp-best">Table 5.2: </span> <strong>DP Prior on UNTC</strong>. Best configuration of attribute similarity measures for UNTC data set. Recall that similarities below <span class="math inline">\(S_{cut}\)</span> are effectively treated as zero (truncation) in order to speed up the sampling.</caption>
+<colgroup>
+<col width="16%" />
+<col width="20%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Field</th>
+<th align="center"><span class="math inline">\(S_{max}\)</span></th>
+<th align="center"><span class="math inline">\(S_{cut}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">firstname</td>
+<td align="center">40</td>
+<td align="center">28</td>
+</tr>
+<tr class="even">
+<td align="center">lastname</td>
+<td align="center">40</td>
+<td align="center">28</td>
+</tr>
+<tr class="odd">
+<td align="center">dept</td>
+<td align="center">20</td>
+<td align="center">10</td>
+</tr>
+<tr class="even">
+<td align="center">muni</td>
+<td align="center">20</td>
+<td align="center">10</td>
+</tr>
+<tr class="odd">
+<td align="center">day</td>
+<td align="center">10</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="center">month</td>
+<td align="center">10</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="center">year</td>
+<td align="center">20</td>
+<td align="center">10</td>
+</tr>
+</tbody>
+</table>
+
+<div class="figure"><span id="fig:sv-trace-dp"></span>
+<img src="thesis_files/figure-html/sv-trace-dp-1.png" alt="DP Prior on UNTC. Posterior diagnostic plots for our proposed method with DP clustering prior with \((a,b)=(1, 99)\), \(\vartheta = 2\), and similarity configuration for each attribute specified in Table 5.2. The left plot shows the trace plot of the latent “population” size that are estimated for 50000 Gibbs samples for the UNTC data set. The right plot shows the posterior density of the number of distinct individuals in the sample for the UNTC data set under the proposed methodology, along with the posterior mean of 680.66 (black line), “true” value of 680 (red line) and 95% credible interval of [677, 684] (blue dashed line)." width="672" />
+<p class="caption">
+Figure 5.4: <strong>DP Prior on UNTC</strong>. Posterior diagnostic plots for our proposed method with DP clustering prior with <span class="math inline">\((a,b)=(1, 99)\)</span>, <span class="math inline">\(\vartheta = 2\)</span>, and similarity configuration for each attribute specified in Table <a href="elsalvador.html#tab:sv-dp-best">5.2</a>. The left plot shows the trace plot of the latent “population” size that are estimated for 50000 Gibbs samples for the UNTC data set. The right plot shows the posterior density of the number of distinct individuals in the sample for the UNTC data set under the proposed methodology, along with the posterior mean of 680.66 (black line), “true” value of 680 (red line) and 95% credible interval of [677, 684] (blue dashed line).
+</p>
+</div>
+
+<div class="figure"><span id="fig:sv-distortion-dp"></span>
+<img src="thesis_files/figure-html/sv-distortion-dp-1.png" alt="DP Prior on UNTC. Convergence diagnostic plot for the number of distortions in each attribute versus the number of Gibbs iterations." width="672" />
+<p class="caption">
+Figure 5.5: <strong>DP Prior on UNTC</strong>. Convergence diagnostic plot for the number of distortions in each attribute versus the number of Gibbs iterations.
+</p>
+</div>
+
+<div class="figure"><span id="fig:svdp-results"></span>
+<img src="figure/sv-dp-table.png" alt="DP Prior on UNTC. Performance of proposed method (DP) on UNTC. 50000 iterations of Gibbs sampler were executed." width="100%" />
+<p class="caption">
+Figure 5.6: <strong>DP Prior on UNTC</strong>. Performance of proposed method (DP) on UNTC. 50000 iterations of Gibbs sampler were executed.
+</p>
+</div>
+<p>As in the PYP experiment, Figure <a href="elsalvador.html#fig:sv-trace-dp">5.4</a> shows the posterior density of population size under the model, with lines indicating
+predicted mean, true mean, and 95% credible interval. Figure <a href="elsalvador.html#fig:svdp-results">5.6</a> shows
+the evaluation metrics for all the experiments that we conducted under the DP prior.
+The model with DP prior was able to achieve precision and recall around 0.8.
+The posterior mean of the observed population was very close to the “truth” of 680
+we calculated <span class="citation">(Sadinle, 2014)</span>. Posterior standard errors remain low.</p>
+<p>From the trace plot we assess the convergence of our Gibbs sampler
+under the DP prior. We do not see any apparent sign for non-convergence after
+50,000 iterations. Figure <a href="elsalvador.html#fig:sv-distortion-dp">5.5</a> shows the number of
+distortions for each attribute along the Markov chain, and we also do not see any
+apparent sign of non-convergence. We notice that the number of distortions remain
+below 5% in the department field, is about 15-20% for firstname, lastname and month
+fields, and is about 44-50% for the municipality, day and year fields.</p>
+<p>Turning to computational speed, the runtimes varied depending on the value of
+<span class="math inline">\(\vartheta\)</span>, but the difference was not too significant.</p>
+<p><strong>Uniform Prior on UNTC</strong>.
+Lastly, we consider the uniform prior on the linkage structure, as in <span class="citation">(Steorts, 2015)</span>.
+The best parameter setting used was <span class="math inline">\((a,b)=(1, 73.5)\)</span> and the similarity configuration
+for each attribute listed in Table <a href="elsalvador.html#tab:sv-uni-best">5.3</a>.</p>
+<table style="width:54%;">
+<caption><span id="tab:sv-uni-best">Table 5.3: </span> <strong>Uniform Prior on UNTC</strong>. Best configuration of attribute similarity measures for UNTC data set. Recall that similarities below <span class="math inline">\(S_{cut}\)</span> are effectively treated as zero (truncation) in order to speed up the sampling.</caption>
+<colgroup>
+<col width="16%" />
+<col width="20%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Field</th>
+<th align="center"><span class="math inline">\(S_{max}\)</span></th>
+<th align="center"><span class="math inline">\(S_{cut}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">firstname</td>
+<td align="center">40</td>
+<td align="center">28</td>
+</tr>
+<tr class="even">
+<td align="center">lastname</td>
+<td align="center">40</td>
+<td align="center">28</td>
+</tr>
+<tr class="odd">
+<td align="center">dept</td>
+<td align="center">20</td>
+<td align="center">10</td>
+</tr>
+<tr class="even">
+<td align="center">muni</td>
+<td align="center">20</td>
+<td align="center">10</td>
+</tr>
+<tr class="odd">
+<td align="center">day</td>
+<td align="center">10</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="center">month</td>
+<td align="center">10</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="center">year</td>
+<td align="center">20</td>
+<td align="center">10</td>
+</tr>
+</tbody>
+</table>
+
+<div class="figure"><span id="fig:sv-trace-uni"></span>
+<img src="thesis_files/figure-html/sv-trace-uni-1.png" alt="Uniform Prior on UNTC. Posterior diagnostic plots for our proposed method with uniform clustering prior with \((a,b)=(1, 73.5)\) and similarity configuration for each attribute specified in Table 5.3. The left plot shows the trace plot of the latent “population” size that are estimated for 130000 Gibbs samples for the UNTC data set. The right plot shows the posterior density of the number of distinct individuals in the sample for the UNTC data set under the proposed methodology, along with the posterior mean of 692.47 (black line), “true” value of 680 (red line) and 95% credible interval of [688, 698] (blue dashed line)." width="672" />
+<p class="caption">
+Figure 5.7: <strong>Uniform Prior on UNTC</strong>. Posterior diagnostic plots for our proposed method with uniform clustering prior with <span class="math inline">\((a,b)=(1, 73.5)\)</span> and similarity configuration for each attribute specified in Table <a href="elsalvador.html#tab:sv-uni-best">5.3</a>. The left plot shows the trace plot of the latent “population” size that are estimated for 130000 Gibbs samples for the UNTC data set. The right plot shows the posterior density of the number of distinct individuals in the sample for the UNTC data set under the proposed methodology, along with the posterior mean of 692.47 (black line), “true” value of 680 (red line) and 95% credible interval of [688, 698] (blue dashed line).
+</p>
+</div>
+
+<div class="figure"><span id="fig:sv-distortion-uni"></span>
+<img src="thesis_files/figure-html/sv-distortion-uni-1.png" alt="Uniform Prior on UNTC. Convergence diagnostic plot for the number of distortions in each attribute versus the number of Gibbs iterations." width="672" />
+<p class="caption">
+Figure 5.8: <strong>Uniform Prior on UNTC</strong>. Convergence diagnostic plot for the number of distortions in each attribute versus the number of Gibbs iterations.
+</p>
+</div>
+
+<div class="figure"><span id="fig:svuni-results"></span>
+<img src="figure/sv-uni-table.png" alt="Uniform Prior on UNTC. Performance of proposed method (Uniform) on UNTC. 130000 iterations of Gibbs sampler were executed." width="100%" />
+<p class="caption">
+Figure 5.9: <strong>Uniform Prior on UNTC</strong>. Performance of proposed method (Uniform) on UNTC. 130000 iterations of Gibbs sampler were executed.
+</p>
+</div>
+<p>Figure <a href="elsalvador.html#fig:sv-trace-uni">5.7</a> shows
+the posterior density of the population size under the model, with lines indicating
+predicted mean, true mean, and 95% credible interval. Figure <a href="elsalvador.html#fig:svuni-results">5.9</a> shows
+the evaluation metrics for all the experiments that we conducted under the uniform prior.
+The best precision and recall resulted from model with uniform prior was 0.867 and 0.661.
+The posterior mean population was relatively close to the truth, and the model consistently overestimated the value. Posterior standard error remained low. Runtime again varied
+depending on the maximum similarity allowed in the similarity function and
+the threshold for truncation.</p>
+<p>From the trace plots we assess the convergence of our Gibbs sampler under the uniform prior.
+We do not see any apparent sign of non-convergence after 130000 iterations.
+Figure <a href="elsalvador.html#fig:sv-distortion-uni">5.8</a> shows the number of distortions for each attribute along the
+Markov chain, and we also do not see any apparent sign of non-convergence.
+We notice that the number of distortions remain below 5% in the department field,
+is about 15-20% for firstname, lastname and month fields, and is about 44-50%
+for the municipality, day and year fields.</p>
+<p>As shown in Figure <a href="elsalvador.html#fig:svuni-results">5.9</a>, computational speed varied depending on the maximum similarity allowed in the similarity function and the threshold for truncation.</p>
+</div>
+<div id="sv-discussion" class="section level2">
+<h2><span class="header-section-number">5.3</span> Discussion of Application on UNTC data</h2>
+<p>In this section, we briefly summarize our results on the UNTC data set. Under the best setting given in Section <a href="elsalvador.html#untc-results">5.2</a>, the DP prior overall performs the best in terms of precision (0.8), recall (0.8), with a 95 percent credible interval of [677,684]. The DP prior was able to generate estimates very tightly around the true cluster size, while the PYP and Uniform prior consistently overestimate the true value. All methods tend to have a balance between the precision and recall, which is desired in the field of entity resolution. In terms of computational complexity, the uniform prior is again the slowest to mix, as we have observed in RLdata500 experiments. Because the DP and PYP prior are more subjective and flexible than the Uniform prior, we are able to provide prior guidance in the selection of hyper-parameters, if we have some idea about the true cluster size apriori. This allows for faster mixing and faster computational time of the Gibbs sampler.</p>
+<p>In applying our proposed method with Bayesian nonparametric priors to the UNTC data set, we make note again that the potential users of our methodology are various human rights groups who need accurate estimates and evaluations of the number of documented identifiable deaths.
+It is always important, therefore, to inform them about the choice of priors and the uncertainty of the Bayesian framework by nature. In terms of estimated number of deaths and the standard error, the three priors we considered were able to produce estimates in the reasonable range, with small variation. Depending on these groups’ expert knowledge of the data set, in the actual application we could choose one prior over another, after experimenting with tuning parameters and doing a thorough sensitivity analysis. In terms of applying entity resolution to a new real world conflict data set, we believe that our Bayesian model needs to be adjusted in a few ways. First, depending on the language of the country, it is likely that different similarity measures than the one we use here needs to be proposed. Secondly, different priors may have to be incorporated. And finally, the parameters of priors will have to be tuned specifically for the data set at hand.</p>
 
 </div>
 </div>

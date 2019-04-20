@@ -85,8 +85,9 @@
 <li class="chapter" data-level="4.4" data-path="synthetic.html"><a href="synthetic.html#discussion-of-application-on-rldata500"><i class="fa fa-check"></i><b>4.4</b> Discussion of Application on RLdata500</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="elsalvador.html"><a href="elsalvador.html"><i class="fa fa-check"></i><b>5</b> Application to El Salvodoran Conflict Data</a><ul>
-<li class="chapter" data-level="5.1" data-path="elsalvador.html"><a href="elsalvador.html#experiments"><i class="fa fa-check"></i><b>5.1</b> Experiments</a></li>
-<li class="chapter" data-level="5.2" data-path="elsalvador.html"><a href="elsalvador.html#discussion-of-application-on-untc-data"><i class="fa fa-check"></i><b>5.2</b> Discussion of Application on UNTC data</a></li>
+<li class="chapter" data-level="5.1" data-path="elsalvador.html"><a href="elsalvador.html#parameter-settings-sv"><i class="fa fa-check"></i><b>5.1</b> Parameter Settings</a></li>
+<li class="chapter" data-level="5.2" data-path="elsalvador.html"><a href="elsalvador.html#untc-results"><i class="fa fa-check"></i><b>5.2</b> UNTC Results</a></li>
+<li class="chapter" data-level="5.3" data-path="elsalvador.html"><a href="elsalvador.html#sv-discussion"><i class="fa fa-check"></i><b>5.3</b> Discussion of Application on UNTC data</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>6</b> Conclusion</a></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -122,7 +123,7 @@ Finally, we provide the posterior distribution under our proposed model in Secti
 <div id="notation" class="section level2">
 <h2><span class="header-section-number">3.1</span> Notation and Assumptions</h2>
 <p>Let <span class="math inline">\(i\in\{1,\ldots,D\}\)</span> index databases and <span class="math inline">\(j\in\{1,\ldots,R_i\}\)</span> index records within each database. Allow <span class="math inline">\(j&#39;\in\{1,\ldots,N\}\)</span> index true individuals, where <span class="math inline">\(N=\sum_{i=1}^D R_i\)</span> without loss of generality. Our indexing allows for categorical or string-field data. (For example, if the categorical data is thought to be reliable, we would like to avoid comparisons of gender. On the other hand, text-style data, such as name and address should be treated as strings.) Given this, let <span class="math inline">\(\ell\in\{1,\ldots,p_s\}\)</span> index string-valued fields, and let <span class="math inline">\(\ell\in\{p_s+1,\ldots,p_s+p_c\}\)</span> index categorical fields.</p>
-<p>Using the same notation as , <span class="math inline">\(X_{ij\ell}\)</span> denotes the observed value of the <span class="math inline">\(\ell\)</span>th field for the <span class="math inline">\(j\)</span>th record in the <span class="math inline">\(i\)</span>th database and it is assumed to be a noisy observation of <span class="math inline">\(Y_{j&#39;\ell}\)</span> denotes the true value of the <span class="math inline">\(\ell\)</span>th field for the <span class="math inline">\(j&#39;\)</span>th latent individual. Additionally, we incorporate the possibility that some attributes <span class="math inline">\(X_{ij\ell}\)</span> may be missing at random through a corresponding observed indicator <span class="math inline">\(O_{ij\ell}\)</span>. <span class="math inline">\(O_{ijl} = 1\)</span> implies that <span class="math inline">\(X_{ijl}\)</span> is observed and <span class="math inline">\(O_{ijl} = 0\)</span> implies that <span class="math inline">\(X_{ijl}\)</span> is missing. We also define <span class="math inline">\(\boldsymbol{X}^{obs} = \{X_{ijl} : O_{ijl} = 1\}\)</span> as the observed part and <span class="math inline">\(\boldsymbol{X}^{miss} = \{X_{ijl} : O_{ijl} = 0\}\)</span> as the missing part of <span class="math inline">\(\boldsymbol{X}\)</span>.
+<p>Using the same notation as <span class="citation">(Steorts, 2015)</span>, <span class="math inline">\(X_{ij\ell}\)</span> denotes the observed value of the <span class="math inline">\(\ell\)</span>th field for the <span class="math inline">\(j\)</span>th record in the <span class="math inline">\(i\)</span>th database and it is assumed to be a noisy observation of <span class="math inline">\(Y_{j&#39;\ell}\)</span> denotes the true value of the <span class="math inline">\(\ell\)</span>th field for the <span class="math inline">\(j&#39;\)</span>th latent individual. Additionally, we incorporate the possibility that some attributes <span class="math inline">\(X_{ij\ell}\)</span> may be missing at random through a corresponding observed indicator <span class="math inline">\(O_{ij\ell}\)</span>. <span class="math inline">\(O_{ijl} = 1\)</span> implies that <span class="math inline">\(X_{ijl}\)</span> is observed and <span class="math inline">\(O_{ijl} = 0\)</span> implies that <span class="math inline">\(X_{ijl}\)</span> is missing. We also define <span class="math inline">\(\boldsymbol{X}^{obs} = \{X_{ijl} : O_{ijl} = 1\}\)</span> as the observed part and <span class="math inline">\(\boldsymbol{X}^{miss} = \{X_{ijl} : O_{ijl} = 0\}\)</span> as the missing part of <span class="math inline">\(\boldsymbol{X}\)</span>.
 Let <span class="math inline">\(\lambda_{ij}\)</span> denote the assigned latent individual to which the
 <span class="math inline">\(j\)</span>th record in the <span class="math inline">\(i\)</span>th database corresponds, i.e., <span class="math inline">\(X_{ij\ell}\)</span> and <span class="math inline">\(Y_{j&#39;\ell}\)</span>
 represent the same individual if and only if <span class="math inline">\(\lambda_{ij}=j&#39;\)</span>. Finally, allow
@@ -221,7 +222,7 @@ P(W=w)=\alpha_\ell(w).
 </div>
 <div id="foundation" class="section level2">
 <h2><span class="header-section-number">3.2</span> Background on Empirical Bayesian Entity Resolution</h2>
-<p>We review the end-to-end entity resolution framework of  that lays the foundation. Assuming the notation defined above, the generative model can be written as:
+<p>We review the end-to-end entity resolution framework of <span class="citation">(Steorts, 2015)</span> that lays the foundation. Assuming the notation defined above, the generative model can be written as:
 <span class="math display">\[\begin{align*}
 X_{ij\ell}\mid \lambda_{ij},\,Y_{\lambda_{ij}\ell},\,z_{ij\ell}\;&amp;\sim\begin{cases}\delta(Y_{\lambda_{ij}\ell})&amp;\text{ if }z_{ij\ell}=0\\F_\ell(Y_{\lambda_{ij}\ell})&amp;\text{ if }z_{ij\ell}=1\text{ and }\ell\le p_s\\G_\ell&amp;\text{ if }z_{ij\ell}=1\text{ and }\ell&gt;p_s\end{cases}\\
 %&amp;\qquad\text{for each }i\in\{1,\ldots,k\},\; j\in\{1,\ldots,n_i\},\; \ell\in\{1,\ldots,p_s+p_c\},\\
@@ -239,7 +240,7 @@ h_\ell(v)=\left\{\sum_{w\in S_\ell}\exp\!\left[-c\,d(v,w)\right]\right\}^{-1},
 \]</span>
 i.e., <span class="math inline">\(h_\ell(v)\)</span> is the normalizing constant for the distribution
 <span class="math inline">\(F_\ell(v)\)</span>. We can compute <span class="math inline">\(h_\ell(v)\)</span> in advance for each possible
-<span class="math inline">\(v\in S_\ell\)</span>. After some simplification, the joint posterior of  becomes (where the full conditional distributions are derived in Appendix <a href="appendix-A.html#appendix-A">A</a>):
+<span class="math inline">\(v\in S_\ell\)</span>. After some simplification, the joint posterior of <span class="citation">(Steorts, 2015)</span> becomes (where the full conditional distributions are derived in Appendix <a href="appendix-A.html#appendix-A">A</a>):
 <span class="math display">\[\begin{align*}
 &amp;\pi(\pmb{\Lambda},\boldsymbol{Y},\boldsymbol{z},\boldsymbol{\beta}\mid \boldsymbol{X})\\
 %&amp;\propto
@@ -262,15 +263,15 @@ d(X_{ij\ell},Y_{\lambda_{ij}\ell})\right]
 </div>
 <div id="similarity" class="section level2">
 <h2><span class="header-section-number">3.3</span> Attribute Similarity Measures</h2>
-<p>In this section, we review the attribute similarity measures defined by .</p>
+<p>In this section, we review the attribute similarity measures defined by <span class="citation">(Marchant, Steorts, Kaplan, Rubinstein, &amp; Elazar, 2019)</span>.</p>
 
 <div class="definition">
 <span id="def:attribute-sim-measure" class="definition"><strong>Definition 3.1  (Attribute similarity measure)  </strong></span>Let <span class="math inline">\(\mathcal{V}\)</span> be the domain of an attribute. An  on <span class="math inline">\(\mathcal{V}\)</span> is a function <span class="math inline">\(\mathtt{sim}: \mathcal{V}\times \mathcal{V}\to [0, s_\mathrm{max}]\)</span> that satisfies <span class="math inline">\(0 \leq s_\mathrm{max} &lt; \infty\)</span> and <span class="math inline">\(\mathtt{sim}(v,w) = \mathtt{sim}(w,v)\)</span> for all <span class="math inline">\(v, w \in \mathcal{V}\)</span>.
 </div>
 
 <p>These similarity measures is used to quantify the likelihood that some value <span class="math inline">\(v\)</span> in the empirical distribution gets chosen as a distortion of the true value <span class="math inline">\(w\)</span>.
-Although the parameterization of attribute similarity is different from the distance measure of ,  proved that the two parameterization is in fact equivalent, as long as the distance measure is bounded and symmetric. We refer the readers to  for detailed proofs of this result.</p>
-<p>During the process of inference, these similarities for the attributes may be expensive to evaluate on-the-fly, so  consider caching and truncation of attribute similarities. Only similarities for pairs of values that fall above a cut-off <span class="math inline">\(S_{cut;\ell}\)</span> are being stored. This is achieved through the following truncation transformation to the raw attribute similarity <span class="math inline">\(\mathtt{sim}_{\ell}(v,w)\)</span>:
+Although the parameterization of attribute similarity is different from the distance measure of <span class="citation">(Steorts, 2015)</span>, <span class="citation">(Marchant et al., 2019)</span> proved that the two parameterization is in fact equivalent, as long as the distance measure is bounded and symmetric. We refer the readers to <span class="citation">(Marchant et al., 2019)</span> for detailed proofs of this result.</p>
+<p>During the process of inference, these similarities for the attributes may be expensive to evaluate on-the-fly, so <span class="citation">(Marchant et al., 2019)</span> consider caching and truncation of attribute similarities. Only similarities for pairs of values that fall above a cut-off <span class="math inline">\(S_{cut;\ell}\)</span> are being stored. This is achieved through the following truncation transformation to the raw attribute similarity <span class="math inline">\(\mathtt{sim}_{\ell}(v,w)\)</span>:
 <span class="math display">\[\begin{equation}
 \underline{\mathtt{sim}}_{\ell}(v,w) = 
   \max \left(0, \ \frac{\mathtt{sim}_{\ell}(v,w) - s_{\mathrm{cut};\ell}}
@@ -279,7 +280,7 @@ Although the parameterization of attribute similarity is different from the dist
 Pairs of values not present in the cache have a truncated similarity of zero by default. We refer readers to Section 6.2 of the paper for discussions about this efficiency consideration.</p>
 <p>In this section we also discuss what the appropriate distance functions for the
 UNTC data would be like. Distances such as the Levenshtein distance would perform poorly because of situations like a dropped name or a re-ordered name would imply a large edit distance.
-Instead, we consider the Monge-Elkan distance of , a hybrid similarity measure, that seems more appropriate as it is insensitive to the variations above. We define Monge-Elkan distance as
+Instead, we consider the Monge-Elkan distance of <span class="citation">(Monge &amp; Elkan, 1997)</span>, a hybrid similarity measure, that seems more appropriate as it is insensitive to the variations above. We define Monge-Elkan distance as
 <span class="math display">\[\begin{equation}
 \texttt{sim}_{\ell}^{\text{M-E}}(A,B) = \frac{1}{|A|} \sum_{a \in A} \max_{b \in B} \texttt{sim}_{\ell}^{\prime}(a,b)
 \end{equation}\]</span>
@@ -309,7 +310,7 @@ Y_{j&#39;\ell} \sim G_{\ell}.
 where <span class="math inline">\(a_{\ell}, b_{\ell}\)</span> are hyperparameters that we tune.</p>
 
 <p>We assume the records are generated one after another in an iterative fashion.
-Different from , we no longer do so by selecting a latent entity uniformly at random.
+Different from <span class="citation">(Steorts, 2015)</span>, we no longer do so by selecting a latent entity uniformly at random.
 Instead, we incorporate subjective, more flexible priors on the linkage structure <span class="math inline">\(\Lambda\)</span>. The generative process is described below.</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>Draw a latent entity assignment from a Bayesian nonparametric prior. Specifically, we consider the Pitman Yor Process prior and the Dirichlet Process prior (generalized as BNP Prior here):
@@ -321,7 +322,7 @@ where <span class="math inline">\(\vartheta\)</span> and <span class="math inlin
 <span class="math display">\[
 z_{ij\ell} | \beta_{i\ell} \sim Bernoulli(\beta_{i\ell}).
 \]</span></p></li>
-<li><p>Draw the record value <span class="math inline">\(X_{ij\ell}\)</span> from a hit-or-miss model (different from the model of , we also incorporate attribute similarity measures to categorical fields):
+<li><p>Draw the record value <span class="math inline">\(X_{ij\ell}\)</span> from a hit-or-miss model (different from the model of <span class="citation">(Steorts, 2015)</span>, we also incorporate attribute similarity measures to categorical fields):
 <span class="math display">\[
 X_{ij\ell} | \lambda_{ij},\,Y_{\lambda_{ij}\ell},\,z_{ij\ell} \sim (1 - z_{ij\ell}) \delta(Y_{\lambda_{ij}\ell}) + z_{ij\ell} \phi(X_{ij\ell} | Y_{\lambda_{ij}\ell}),
 \]</span>
@@ -332,7 +333,7 @@ where
 for all attributes string-valued and categorical.
 If <span class="math inline">\(z_{ij\ell}=0\)</span> or no distortion, then the value of <span class="math inline">\(X_{ij\ell}\)</span> is exactly that of the corresponding latent entity.
 If <span class="math inline">\(z_{ij\ell}=1\)</span> or distortion, <span class="math inline">\(X_{ij\ell}\)</span> is then drawn from a weighted empirical distribution, with similarity measures.
-Equivalently, given the result of , we can write
+Equivalently, given the result of <span class="citation">(Marchant et al., 2019)</span>, we can write
 <span class="math display">\[
 \phi(X_{ij\ell} = w| Y_{\lambda_{ij}\ell}) = \frac{\alpha_\ell(w)\,\exp\!\left[\mathtt{sim}_{\ell}(w, Y_{\lambda_{ij}\ell})\right]}{\sum_{w\in S_\ell}\alpha_\ell(w)\,\exp\!\left[\mathtt{sim}_{\ell}(w, Y_{\lambda_{ij}\ell})\right]}\propto\alpha_\ell(w)\,\exp\!\left[\mathtt{sim}_{\ell}(w, Y_{\lambda_{ij}\ell})\right].
 \]</span></p></li>
@@ -340,14 +341,14 @@ Equivalently, given the result of , we can write
 </div>
 <div id="bnp" class="section level2">
 <h2><span class="header-section-number">3.5</span> Entity Resolution with the Bayesian Nonparametric Priors</h2>
-<p>The empirical Bayesian approach (EB) of  uses a uniform prior to model the prior distribution of the linkage structure <span class="math inline">\(\boldsymbol{\Lambda}\)</span>.
-The uniform prior assumes that every legitimate configuration of the <span class="math inline">\(\lambda_{ij}\)</span> is equally likely a priori, and this implies a default prior on related quantities, such as the number of individuals in the data .
+<p>The empirical Bayesian approach (EB) of <span class="citation">(Steorts, 2015)</span> uses a uniform prior to model the prior distribution of the linkage structure <span class="math inline">\(\boldsymbol{\Lambda}\)</span>.
+The uniform prior assumes that every legitimate configuration of the <span class="math inline">\(\lambda_{ij}\)</span> is equally likely a priori, and this implies a default prior on related quantities, such as the number of individuals in the data <span class="citation">(Steorts et al., 2016)</span>.
 Moreover, each record is assumed to be equally likely to correspond to any of the <span class="math inline">\(N\)</span> possible latent individuals a priori.
 While the choice of uniform prior is convenient and simplifies the computation of the posterior, there are several weaknesses that should be addressed.
 Firstly, the uniform prior is constructed under the assumption that the <span class="math inline">\(N\)</span> total records are randomly sampled with replacement from a population of <span class="math inline">\(N\)</span> total latent individuals.
 This turns out to be quite a strong assumption on the linkage structure. We assume that the total number of latent individuals has the same size as the sample.
 We also restrict the latent population size to be maximum <span class="math inline">\(N\)</span>, and not considering the case that the latent population size being greater than <span class="math inline">\(N\)</span>.
-Secondly,  showed that even though the uniform prior is often regarded as an non-informative prior, it is actually highly informative in the EB model because under certain conditions the data will not be able to overwhelm the prior, which defeats the purpose of developing a Bayesian model.</p>
+Secondly, <span class="citation">(Steorts et al., 2016)</span> showed that even though the uniform prior is often regarded as an non-informative prior, it is actually highly informative in the EB model because under certain conditions the data will not be able to overwhelm the prior, which defeats the purpose of developing a Bayesian model.</p>
 <p>For the above reasons, we consider more well-principled, subjective priors for the linkage prior.
 More specifically, we consider the Pitman-Yor prior (PYP).
 We first present notation that is used throughout the remainder of the paper and then derive the full conditional distributions. In terms of inference, we implement a standard Gibbs sampler.
@@ -423,7 +424,7 @@ P(\lambda_{ij} = j&#39;_g \in \{j&#39;_1, ..., j&#39;_{k_{i,j-1}}\}|  \lambda_{1
 &amp; \quad \times \left[ \prod\limits_{ij\ell \text{ s.t. } O_{ij\ell}=1} (1-z_{ij\ell}) \delta(Y_{\lambda_{ij}\ell})  + z_{ij\ell} \cdot \phi(X_{ij\ell} | Y_{\lambda_{ij}\ell}) \right].
 \end{split}
 \end{equation*}\]</span></p>
-<p>The full conditional distributions for other parameters remain the same as in  and we show them in Appendix . The full conditional distributions under
+<p>The full conditional distributions for other parameters remain the same as in <span class="citation">(Steorts, 2015)</span> and we show them in Appendix <a href="appendix-A.html#appendix-A">A</a>. The full conditional distributions under
 the DP framework is only different from that under the PYP framework in the cluster
 assignment probabilities <span class="math inline">\(P(\lambda_{ij} \sim H_0 | \lambda_{1,1}, ..., \lambda_{i, j-1}, \vartheta, H_0)\)</span> and <span class="math inline">\(P(\lambda_{ij} = j&#39;_g \in \{j&#39;_1, ..., j&#39;_{k_{i,j-1}}\}| \lambda_{1,1}, ..., \lambda_{i, j-1}, \vartheta, H_0)\)</span>.</p>
 

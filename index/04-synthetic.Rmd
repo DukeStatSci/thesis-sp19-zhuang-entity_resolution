@@ -27,7 +27,7 @@ plot2 <- function(result) {
 
 # Application To Synthetic Data {#synthetic}
 
-In this section, we first apply our proposed methodology to synthetic data sets before applying our methodology in section \@ref(elsalvador) to El Salvador. We describe the synthetic data, describe the evaluation metrics, and then provide our results on the synthetic data set. In our experiments on RLdata500, we compared our proposed methodology of the PYP and DP priors to the uniform prior of \cite{steorts15entity}. We elaborate on the settings of each of these below.
+In this section, we first apply our proposed methodology to synthetic data sets before applying our methodology in section \@ref(elsalvador) to El Salvador. We describe the synthetic data, describe the evaluation metrics, and then provide our results on the synthetic data set. In our experiments on RLdata500, we compared our proposed methodology of the PYP and DP priors to the uniform prior of [@steorts_entity_2015]. We elaborate on the settings of each of these below.
 
 The RLdata500 synthetic data set is available in the RecordLinkage package in CRAN. It consists of 500 records, where 10 percent of the records are duplicates. That is, 450 individuals of this data set are unique entities. Features available in this data set are first and last German name and full date of birth. In addition, there are ground truth identifiers available for all records in this data set, so that we can easily ascertain the sensitivity and robustness of our proposed methodology. 
 
@@ -35,13 +35,13 @@ The RLdata500 synthetic data set is available in the RecordLinkage package in CR
 We first provide all settings that are used in our experiments on RLdata500. Since we have ground truth in this particular application, we know that the true number of unique entities is 450. This helps us in choosing the hyper-parameters of the DP and the PYP distributions. As we explain below, for each prior, such as the PYP, we test several different hyper-parameter settings, and run the Gibbs sampler for each experiment. 
 
 **PYP prior parameters.**
-For example, we assume that the prior mean of the latent population is 450. Next, we choose three different prior variances of the latent population: 2840, 1610, and 584. For the PYP prior, we then solve for the parameters using (\ref{eqn:1}) and (\ref{eqn:2}) to arrive at three sets of PYP prior hyper-parameters $$(\vartheta, \sigma): (0.4, 0.98), (2, 0.975), (10, 0.965).$$ Next, we chose three sets of prior hyper-parameters for the Beta distortion prior $$(a, b): (0.5, 50), (1, 99), (3, 97).$$ These settings all satisfy the constraints on the prior, and correspond to prior mean of 0.001, 0.01, and 0.03 for the distortion probability. These settings were recommended in \cite{steorts15entity}, and thus, this motivates our choice of these parameter settings here. Finally, we choose $S_{max}$ and $S_{cut}$ in the string similarity measure of first name and last name to be $(20, 10)$ for the PYP prior setting. This means that we will treat similarity below 10 as zero. 
+For example, we assume that the prior mean of the latent population is 450. Next, we choose three different prior variances of the latent population: 2840, 1610, and 584. For the PYP prior, we then solve for the parameters using (\ref{eqn:1}) and (\ref{eqn:2}) to arrive at three sets of PYP prior hyper-parameters $$(\vartheta, \sigma): (0.4, 0.98), (2, 0.975), (10, 0.965).$$ Next, we chose three sets of prior hyper-parameters for the Beta distortion prior $$(a, b): (0.5, 50), (1, 99), (3, 97).$$ These settings all satisfy the constraints on the prior, and correspond to prior mean of 0.001, 0.01, and 0.03 for the distortion probability. These settings were recommended in [@steorts_entity_2015], and thus, this motivates our choice of these parameter settings here. Finally, we choose $S_{max}$ and $S_{cut}$ in the string similarity measure of first name and last name to be $(20, 10)$ for the PYP prior setting. This means that we will treat similarity below 10 as zero. 
 
 **DP prior parameters.**
 Since DP is a special case of the PYP, we start with the hyperparameter settings described above for the PYP. We also perform a random search over the space of concentration parameter $\vartheta$, as well as the string similarity measure. 
 
 **Uniform prior parameters.**
-For the uniform prior on the linkage structure, given the sensitivity analysis completed in \cite{steorts15entity}, we utilize the best configuration for the parameters, which is $(a,b) = (1, 99)$. We refer the reader to this paper for a full review regarding the sensitivity analysis. 
+For the uniform prior on the linkage structure, given the sensitivity analysis completed in [@steorts_entity_2015], we utilize the best configuration for the parameters, which is $(a,b) = (1, 99)$. We refer the reader to this paper for a full review regarding the sensitivity analysis. 
 We also perform a random search over the string similarity measure.
 
 ## Evaluation Metrics {#evaluation-metrics}
@@ -52,7 +52,7 @@ $$\text{Precision} = \text{TP} / (\text{TP} + \text{FP}) \; \text{and} \; \text{
 where TP = \# of ground truth matching pairs that are also predicted matches, FP = \# of ground truth non-matching pairs that are predicted matches, and FN = \# of ground truth matching pairs that are predicted non-matches.
 
 ## RLdata500 Results {#rldata500-results}
-We now provide the experimental results of our proposed methodology using the PYP and DP priors, where we also make a comparison with the uniform prior of \cite{steorts15entity}.
+We now provide the experimental results of our proposed methodology using the PYP and DP priors, where we also make a comparison with the uniform prior of [@steorts_entity_2015].
 
 **PYP prior on RLdata500.**
 First, we consider the PYP prior on the linkage structure. The best parameter setting used was $(a,b)=(0.5, 50)$, $(S_{max}, S_{cut}) = (20, 10)$, $(\vartheta, \sigma) = (2, 0.975),$ where best is determined based upon the evaluation metrics defined in section \@ref(evaluation-metrics).  
@@ -121,7 +121,7 @@ Turning to convergence diagnostics, we did not see any signs of a lack of conver
 Turning to computational speed, the runtimes varied depending on the maximum similarity allowed in the Levenshtein similarity function and the threshold for truncation. Higher thresholds, which correspond to the maximum similarity can result in memory storage, which results in faster sampling, and thus, a faster runtime. In addition, if the maximum similarity is also set to a low value, the the model allows for more distortion in the sampling process, which will lead to longer run times. 
 
 **Uniform prior on RLdata500**.
-Third, we consider the uniform prior on the linkage structure, as in \citep{steorts15entity}. The best parameter setting used was $(a,b)=(1, 99)$ and $(S_{max}, S_{cut}) = (30, 10)$. 
+Third, we consider the uniform prior on the linkage structure, as in [@steorts_entity_2015]. The best parameter setting used was $(a,b)=(1, 99)$ and $(S_{max}, S_{cut}) = (30, 10)$. 
 
 (ref:syn-trace-uni) **Uniform prior on RLdata500**. Posterior diagnostic plots for our proposed method with uniform clustering prior with $(a,b)=(1, 99)$ and $(S_{max}, S_{cut}) = (30, 10)$. The left plot shows the trace plot of the latent ``population" size that are estimated for 90000 Gibbs samples for the RLdata500 data set. The right plot shows the posterior density of the number of distinct individuals in the sample for the RLdata500 data set under the proposed methodology, along with the posterior mean of 446.15 (black line), true value of 450 (red line) and 95\% credible interval of [444, 448] (blue dashed line).
 
