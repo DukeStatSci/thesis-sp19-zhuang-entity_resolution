@@ -167,5 +167,3 @@ d(X_{ij\ell},Y_{v \ell} )
 }.
 \end{align*}
 
-
-# The Second Appendix, for Fun
